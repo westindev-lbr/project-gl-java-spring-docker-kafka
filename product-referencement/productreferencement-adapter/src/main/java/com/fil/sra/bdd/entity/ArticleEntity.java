@@ -1,22 +1,18 @@
 package com.fil.sra.bdd.entity;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import java.util.List;
 
-
 @SuperBuilder
 @MappedSuperclass
 @Getter
 @Setter
 public class ArticleEntity {
-
     public ArticleEntity(){
 
     }
-
     protected String img;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +23,4 @@ public class ArticleEntity {
     protected Integer price;
     protected Float vat;
     protected String name;
-
-
-
-
 }
