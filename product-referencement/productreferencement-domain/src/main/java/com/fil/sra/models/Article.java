@@ -1,6 +1,5 @@
 package com.fil.sra.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Article {
@@ -12,7 +11,7 @@ public class Article {
     private String reference;
     private double vat;
     private String img;
-    private List<Category> categories = new ArrayList<Category>();
+    private List<Category> categories;
 
     public Integer getId() { return this.id; }
     public void setId(int i) {this.id = i;}
@@ -38,4 +37,5 @@ public class Article {
     public void setVat(double vat) {this.vat = vat;}
 
     public List<Category> getCategories() {return this.categories;}
+    public void setCategories(List<Category> categories) {this.categories = categories;}
 }
