@@ -1,5 +1,7 @@
 package com.fil.sra.models;
 
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 import lombok.Getter;

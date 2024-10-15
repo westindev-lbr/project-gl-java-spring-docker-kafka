@@ -1,5 +1,6 @@
 package com.fil.sra.models;
 
+import com.fil.sra.exception.NotEnoughStockQuantityException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -16,7 +17,9 @@ public class Stock {
         this.setQuantity(this.getQuantity()+amount);
     }
 
-    public void decreaseQuantity(int amount){
+    public void decreaseQuantity(int amount) throws NotEnoughStockQuantityException{
+        if(this.quantity - amount < 0)
+            throw new NotEnoughStockQuantityException("Cannot decrease stock quantity when there is not enough quantity");
         this.setQuantity(this.getQuantity()-amount);
     }
 
