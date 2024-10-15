@@ -9,4 +9,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Product extends Article{
     private Stock stock;
+
 }
