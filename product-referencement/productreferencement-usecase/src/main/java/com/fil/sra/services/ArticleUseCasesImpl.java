@@ -1,4 +1,4 @@
-package com.fil.sra.service;
+package com.fil.sra.services;
 
 import com.fil.sra.dto.ArticleDto;
 import com.fil.sra.dto.ResearchArticleRequestDto;

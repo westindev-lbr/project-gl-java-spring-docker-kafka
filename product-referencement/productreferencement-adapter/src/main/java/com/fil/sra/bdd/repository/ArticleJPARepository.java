@@ -14,6 +14,7 @@ import java.util.List;
 
 @Repository
 public interface ArticleJPARepository extends CrudRepository<ArticleEntity,Integer> {
-    Page<ArticleEntity> findByNameContainingAndCategories(String subName, List<CategoryEntity> categories, Pageable pageable);
+    //Page<ArticleEntity> findByNameContainingAndCategories(String subName, List<CategoryEntity> categories, Pageable pageable);
+    List<ArticleEntity> findByNameContainingAndCategories(String subName, List<CategoryEntity> categories);
 
 }

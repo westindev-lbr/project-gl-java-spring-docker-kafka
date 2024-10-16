@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface CategoryJPARepository extends CrudRepository<CategoryEntity,Integer> {
-    List<CategoryEntity> findByName(String name);
+public interface CategoryJPARepository extends CrudRepository<CategoryEntity, Integer> {
+    CategoryEntity findByName(String name);  // Renvoie directement une catégorie
 }

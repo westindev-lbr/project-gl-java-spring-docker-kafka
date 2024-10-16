@@ -5,7 +5,7 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@Builder
+@NoArgsConstructor
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

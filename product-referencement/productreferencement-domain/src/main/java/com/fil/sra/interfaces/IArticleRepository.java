@@ -1,7 +1,6 @@
-package com.fil.sra.repository;
+package com.fil.sra.interfaces;
 
 import com.fil.sra.models.Article;
-import com.fil.sra.models.Category;
 
 import java.util.List;
 

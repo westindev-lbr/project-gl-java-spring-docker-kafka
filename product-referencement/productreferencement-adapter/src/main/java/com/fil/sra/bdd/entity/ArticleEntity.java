@@ -1,25 +1,25 @@
 package com.fil.sra.bdd.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import java.util.List;
 
-@SuperBuilder
+
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
 @Entity
 public class ArticleEntity {
-    public ArticleEntity(){
 
-    }
     protected String img;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String ean;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     protected List<CategoryEntity> categories;
     protected Double price;
     protected Float vat;
