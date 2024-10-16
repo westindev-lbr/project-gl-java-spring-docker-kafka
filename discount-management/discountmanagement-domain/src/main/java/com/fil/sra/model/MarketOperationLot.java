@@ -1,10 +1,11 @@
 package com.fil.sra.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+@Builder
 @Getter
 @Setter
 public class MarketOperationLot extends MarketOperation{
