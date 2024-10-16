@@ -6,9 +6,10 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 
 @SuperBuilder
-@MappedSuperclass
 @Getter
 @Setter
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
 public class ArticleEntity {
     public ArticleEntity(){
 
@@ -20,7 +21,8 @@ public class ArticleEntity {
     protected String ean;
     @ManyToMany
     protected List<CategoryEntity> categories;
-    protected Integer price;
+    protected Double price;
     protected Float vat;
     protected String name;
+    private String brand;
 }
