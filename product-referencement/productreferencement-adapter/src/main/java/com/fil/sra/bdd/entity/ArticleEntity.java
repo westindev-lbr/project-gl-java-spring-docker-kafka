@@ -19,6 +19,7 @@ public class ArticleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String ean;
+
     @ManyToMany(fetch = FetchType.EAGER)
     protected List<CategoryEntity> categories;
     protected Double price;

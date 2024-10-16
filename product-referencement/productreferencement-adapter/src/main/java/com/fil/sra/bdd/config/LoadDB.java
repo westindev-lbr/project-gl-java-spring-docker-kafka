@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,11 @@ public class LoadDB {
             test.setName("cat1");
             categoryJPARepository.save(test);
 
-            List<CategoryEntity> catEntity = List.of(test);
+            CategoryEntity test2 = new CategoryEntity();
+            test2.setName("cat2");
+            categoryJPARepository.save(test2);
+
+            List<CategoryEntity> catEntity = List.of(test,test2);
 
             ProductEntity p1 = new ProductEntity();
             p1.setName("Product1");
@@ -54,31 +59,13 @@ public class LoadDB {
             productJPARepository.save(p1);
             perishableJPARepository.save(p2);
 
-            log.info("\nProducts field");
-            productJPARepository.findAll().forEach(e -> {
-                ProductEntity product = (ProductEntity) e;
-                log.info(product.getName());
-            });
 
-            log.info("\nPerishables field");
-            perishableJPARepository.findAll().forEach(e -> {
-                PerishableEntity perishable = (PerishableEntity) e;
-                log.info(perishable.getName());
-            });
 
-            log.info("\nArticles field");
-            articleJPARepository.findAll().forEach(e -> {
-                ArticleEntity article = (ArticleEntity) e;
-                log.info(article.getName());
-            });
-
-            articleRepository.getArticlesByCriteria("Prod",List.of("cat1"),1,5)
+            log.info("GetArticlesByCriteria :");
+            articleRepository.getArticlesByCriteria("Prod",List.of("cat1","cat2"),5,0)
                     .forEach(e -> log.info(e.getName()));
+            };
 
-
-            log.info("Salut jE");
-        };
-
-            }
+    }
 
 }

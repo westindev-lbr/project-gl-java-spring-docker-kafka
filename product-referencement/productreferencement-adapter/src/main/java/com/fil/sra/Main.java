@@ -18,16 +18,6 @@ import java.util.List;
 
 @SpringBootApplication
 public class Main  {
-    @Autowired
-    private ProductJPARepository productJPARepository;
-    @Autowired
-    private PerishableJPARepository perishableJPARepository;
-    @Autowired
-    private ArticleJPARepository articleJPARepository;
-    @Autowired
-    private CategoryJPARepository categoryJPARepository;
-    @Autowired
-    private ArticleRepositoryImpl articleRepository;
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
