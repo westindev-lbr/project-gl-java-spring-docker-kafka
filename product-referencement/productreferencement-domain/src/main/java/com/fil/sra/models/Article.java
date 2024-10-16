@@ -1,14 +1,16 @@
 package com.fil.sra.models;
 
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 public class Article {
 
     protected int id;
