@@ -12,15 +12,7 @@ public interface CategoryEntityMapper {
     // Mapper instance to be used in the application
     CategoryEntityMapper INSTANCE = Mappers.getMapper(CategoryEntityMapper.class);
 
-    // Mapping between CategoryEntity and Category (model)
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
     Category toCategory(CategoryEntity entity);
-
-    // InverseMapping
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "orderIdx", target = "orderIdx")
     CategoryEntity toCategoryEntity(Category category);
 
 }

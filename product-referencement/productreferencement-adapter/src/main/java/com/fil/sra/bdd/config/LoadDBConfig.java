@@ -1,6 +1,5 @@
 package com.fil.sra.bdd.config;
 
-import com.fil.sra.bdd.entity.ArticleEntity;
 import com.fil.sra.bdd.entity.CategoryEntity;
 import com.fil.sra.bdd.entity.PerishableEntity;
 import com.fil.sra.bdd.entity.ProductEntity;
@@ -9,12 +8,12 @@ import com.fil.sra.bdd.repository.CategoryJPARepository;
 import com.fil.sra.bdd.repository.PerishableJPARepository;
 import com.fil.sra.bdd.repository.ProductJPARepository;
 import com.fil.sra.bdd.service.ArticleRepositoryImpl;
+import com.fil.sra.interfaces.IArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -22,12 +21,12 @@ import java.util.List;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class LoadDB {
+public class LoadDBConfig {
 
-    private final ArticleRepositoryImpl articleRepository;
+
 
     @Bean
-    public CommandLineRunner load(CategoryJPARepository categoryJPARepository, ProductJPARepository productJPARepository, PerishableJPARepository perishableJPARepository, ArticleJPARepository articleJPARepository){
+    public CommandLineRunner load(CategoryJPARepository categoryJPARepository, ProductJPARepository productJPARepository, PerishableJPARepository perishableJPARepository,IArticleRepository articleRepository){
 
         return args -> {
 

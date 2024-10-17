@@ -7,7 +7,6 @@ import com.fil.sra.bdd.repository.ArticleJPARepository;
 import com.fil.sra.bdd.repository.CategoryJPARepository;
 import com.fil.sra.models.Article;
 import com.fil.sra.interfaces.IArticleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -15,14 +14,17 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
-
 @Component
 public class ArticleRepositoryImpl implements IArticleRepository {
-    @Autowired
-    private ArticleJPARepository articleJPARepository;
-    @Autowired
-    private CategoryJPARepository categoryJPARepository;
+
+    private final ArticleJPARepository articleJPARepository;
+    private final CategoryJPARepository categoryJPARepository;
+
+    public ArticleRepositoryImpl(ArticleJPARepository articleJPARepository,CategoryJPARepository categoryJPARepository){
+        this.articleJPARepository = articleJPARepository;
+        this.categoryJPARepository = categoryJPARepository;
+    }
+
     @Override
     public List<Article> getArticlesByCriteria(String subName, List<String> categories,int paginationSize,int pageNumber) {
         List<CategoryEntity> categoryEntities = categories.stream().map(name -> categoryJPARepository.findByName(name).orElse(null)).filter(cat -> cat != null).toList();

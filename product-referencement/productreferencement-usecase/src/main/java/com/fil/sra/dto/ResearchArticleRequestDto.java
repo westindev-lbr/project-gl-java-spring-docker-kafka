@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Builder
 public class ResearchArticleRequestDto {
-    private List<Category> categories;
+    private List<String> categories;
     private String subName;
     private int paginationSize;
     private int pageNumber;
