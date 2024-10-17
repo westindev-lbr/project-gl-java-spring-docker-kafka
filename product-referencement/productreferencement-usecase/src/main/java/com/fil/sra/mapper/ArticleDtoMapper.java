@@ -10,5 +10,6 @@ public interface ArticleDtoMapper {
     ArticleDtoMapper INSTANCE = Mappers.getMapper(ArticleDtoMapper.class);
 
     Article toArticle(ArticleDto dto);
+    //@Mapping(target = "categories", source = "categories")
     ArticleDto toArticleDto(Article article);
 }

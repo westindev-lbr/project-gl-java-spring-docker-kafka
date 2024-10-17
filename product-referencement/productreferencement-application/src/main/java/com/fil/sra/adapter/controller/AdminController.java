@@ -13,14 +13,11 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/admin")
 public class AdminController {
-
     private final IArticleUseCases articleUseCases;
 
     public AdminController(IArticleUseCases articleUseCases){
         this.articleUseCases = articleUseCases;
     }
-
-
     @GetMapping("/articles")
     public ResponseEntity<List<ArticleDto>> getPaginatedArticles(@RequestBody ResearchArticleRequestDto search){
         return ResponseEntity.ok(articleUseCases.getPaginatedArticles(search));
