@@ -61,7 +61,7 @@ public class LoadDBConfig {
 
 
             log.info("GetArticlesByCriteria :");
-            articleRepository.getArticlesByCriteria("Prod",List.of("cat1","cat2"),5,0)
+            articleRepository.getArticlesByCriteria(null,"Prod",List.of("cat1","cat2"),5,0)
                     .forEach(e -> log.info(e.getName()));
             };
 

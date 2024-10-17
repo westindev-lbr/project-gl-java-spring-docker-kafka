@@ -18,7 +18,7 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
 
     @Override
     public List<ArticleDto> getPaginatedArticles(ResearchArticleRequestDto search) {
-        List<Article> articles = articleRepository.getArticlesByCriteria(search.getSubName(),search.getCategories(),search.getPaginationSize(),search.getPageNumber());
+        List<Article> articles = articleRepository.getArticlesByCriteria(search.getArticleId(),search.getSubName(),search.getCategories(),search.getPaginationSize(),search.getPageNumber());
         return articles.stream().map(article -> ArticleDtoMapper.INSTANCE.toArticleDto(article)).toList();
     }
 }

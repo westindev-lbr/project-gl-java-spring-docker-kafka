@@ -15,5 +15,5 @@ public class ResearchArticleRequestDto {
     private String subName;
     private int paginationSize;
     private int pageNumber;
-    private int articleId;
+    private Integer articleId;
 }
