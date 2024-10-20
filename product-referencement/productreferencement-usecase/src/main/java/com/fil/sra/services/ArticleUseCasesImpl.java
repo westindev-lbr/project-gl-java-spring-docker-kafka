@@ -2,9 +2,9 @@ package com.fil.sra.services;
 
 import com.fil.sra.dto.ArticleDto;
 import com.fil.sra.dto.ResearchArticleRequestDto;
-import com.fil.sra.interfaces.IArticleRepository;
 import com.fil.sra.mapper.ArticleDtoMapper;
 import com.fil.sra.models.Article;
+import com.fil.sra.ports.IArticleRepository;
 import com.fil.sra.ports.IArticleUseCases;
 
 import java.util.List;
