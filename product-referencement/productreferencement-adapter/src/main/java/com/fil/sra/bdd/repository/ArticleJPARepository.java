@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface ArticleJPARepository extends PagingAndSortingRepository<ArticleEntity,Integer> {
     Page<ArticleEntity> findByNameContainingAndCategoriesIn(String subName, List<CategoryEntity> categories, Pageable pageable);
     Optional<ArticleEntity> findById(Integer id);
-
+    Optional<ArticleEntity> findByName(String name);
+    Optional<ArticleEntity> save(ArticleEntity article);
 }

@@ -1,14 +1,13 @@
 package com.fil.sra.bdd.config;
 
-import com.fil.sra.bdd.entity.CategoryEntity;
-import com.fil.sra.bdd.entity.PerishableEntity;
-import com.fil.sra.bdd.entity.ProductEntity;
-import com.fil.sra.bdd.repository.ArticleJPARepository;
-import com.fil.sra.bdd.repository.CategoryJPARepository;
-import com.fil.sra.bdd.repository.PerishableJPARepository;
-import com.fil.sra.bdd.repository.ProductJPARepository;
-import com.fil.sra.bdd.service.ArticleRepositoryImpl;
-import com.fil.sra.interfaces.IArticleRepository;
+import com.fil.sra.models.Article;
+import com.fil.sra.models.Category;
+import com.fil.sra.models.Perishable;
+import com.fil.sra.models.Stock;
+import com.fil.sra.ports.IArticleRepository;
+import com.fil.sra.ports.ICategoryRepository;
+import com.fil.sra.ports.IStockRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -23,47 +22,53 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoadDBConfig {
 
-
-
     @Bean
-    public CommandLineRunner load(CategoryJPARepository categoryJPARepository, ProductJPARepository productJPARepository, PerishableJPARepository perishableJPARepository,IArticleRepository articleRepository){
+    public CommandLineRunner load(
+            ICategoryRepository categoryRepository,
+            IArticleRepository articleRepository,
+            IStockRepository stockRepository
+            ) {
 
         return args -> {
 
             log.info("Hello world!");
 
-            CategoryEntity test = new CategoryEntity();
-            test.setName("cat1");
-            categoryJPARepository.save(test);
+            Category c1 = Category.builder().id(1).name("cat1").build();
+            Category c2 = Category.builder().id(2).name("cat2").build();
 
-            CategoryEntity test2 = new CategoryEntity();
-            test2.setName("cat2");
-            categoryJPARepository.save(test2);
+            categoryRepository.addCategory(c1);
+            categoryRepository.addCategory(c2);
 
-            List<CategoryEntity> catEntity = List.of(test,test2);
+            Article p1 = Article.builder()
+                    .name("Product1")
+                    .ean("ean1")
+                    .price(5890.0)
+                    .categories(List.of(c1, c2))
+                    .build();
 
-            ProductEntity p1 = new ProductEntity();
-            p1.setName("Product1");
-            p1.setEan("ean1");
-            p1.setCategories(catEntity);
-            p1.setPrice(5890.0);
+            Stock s1 = Stock.builder()
+                    .article(p1)
+                    .quantity(10)
+                    .build();
 
-            PerishableEntity p2 = new PerishableEntity();
-            p2.setName("ProductPerish");
-            p2.setEan("ean2");
-            p2.setPrice(5890.0);
-            p2.setBestBefore(new Date());
+            
 
+            Perishable p2 =  Perishable.builder()
+                    .name("ProductPerish")
+                    .ean("ean2")
+                    .price(5890.0)
+                    .categories(List.of(c1, c2))
+                    .bestBefore(new Date())
+                    .build();
 
-            productJPARepository.save(p1);
-            perishableJPARepository.save(p2);
-
-
+            articleRepository.addArticle(p1);
+            articleRepository.addArticle(p2);
 
             log.info("GetArticlesByCriteria :");
-            articleRepository.getArticlesByCriteria(null,"Prod",List.of("cat1","cat2"),5,0)
+
+            articleRepository.getArticlesByCriteria(null, "Prod", List.of("cat1", "cat2"), 5, 0)
                     .forEach(e -> log.info(e.getName()));
-            };
+        };
 
     }
 
