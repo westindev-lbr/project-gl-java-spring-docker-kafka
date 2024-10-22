@@ -3,7 +3,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import java.util.List;
 
 
@@ -11,19 +10,23 @@ import java.util.List;
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
-@Entity
+@Entity(name = "article")
 public class ArticleEntity {
 
-    protected String img;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
+
+    protected String name;
+    protected String brand;
+    protected Double price;
     protected String ean;
+    protected Float vat;
+    protected String img;
 
     @ManyToMany(fetch = FetchType.EAGER)
     protected List<CategoryEntity> categories;
-    protected Double price;
-    protected Float vat;
-    protected String name;
-    private String brand;
+
+    @OneToOne(mappedBy = "article", fetch = FetchType.LAZY)
+    protected StockEntity stockGlobal;
 }

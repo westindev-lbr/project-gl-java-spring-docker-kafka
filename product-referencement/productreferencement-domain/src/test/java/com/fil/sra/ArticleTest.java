@@ -21,7 +21,7 @@ class ArticleTest {
                 .brand("Cristaline")
                 .price(1.0)
                 .name("Bouteille d'eau 1L")
-                .reference("123456789")
+                .ean("123456789")
                 .vat(0.2)
                 .img(
                         "https://franprix.twic.pics/product-images/3254381025887_H1N1_s06?twic=v1/output=jpeg/cover=420x-")
@@ -41,7 +41,7 @@ class ArticleTest {
         assertEquals("Cristaline", article.getBrand());
         assertEquals(1.0, article.getPrice());
         assertEquals("Bouteille d'eau 1L", article.getName());
-        assertEquals("123456789", article.getReference());
+        assertEquals("123456789", article.getEan());
         assertEquals(0.2, article.getVat());
         assertEquals("https://franprix.twic.pics/product-images/3254381025887_H1N1_s06?twic=v1/output=jpeg/cover=420x-",
                 article.getImg());

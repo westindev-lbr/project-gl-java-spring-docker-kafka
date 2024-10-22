@@ -15,11 +15,12 @@ public class Article {
 
     protected int id;
     protected String brand;
-    protected double price;
     protected String name;
-    protected String reference;
+    protected double price;
+    protected String ean;
     protected double vat;
     protected String img;
+    
     protected List<Category> categories;
 
     public void addCategory(Category category) {

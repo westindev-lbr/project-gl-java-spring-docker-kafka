@@ -3,10 +3,10 @@ package com.fil.sra.bdd.mapper;
 import com.fil.sra.bdd.entity.CategoryEntity;
 import com.fil.sra.models.Category;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CategoryEntityMapper {
 
     // Mapper instance to be used in the application

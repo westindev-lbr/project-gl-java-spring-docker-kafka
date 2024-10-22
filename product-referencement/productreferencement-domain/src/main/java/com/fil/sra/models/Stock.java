@@ -10,8 +10,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Stock {
     protected int id;
-    protected Product product;
     protected int quantity;
+    protected Article article;
 
     public void increaseQuantity(int amount){
         this.setQuantity(this.getQuantity()+amount);

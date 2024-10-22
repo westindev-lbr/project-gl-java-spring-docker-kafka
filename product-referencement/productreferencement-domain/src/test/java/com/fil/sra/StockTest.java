@@ -8,26 +8,23 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class StockTest {
+class StockTest {
 
     protected Stock stock;
     @BeforeEach
     public void setUp(){
-        this.stock = this.createStock();
-    }
-    public Stock createStock(){
-        return new Stock();
+        this.stock = Stock.builder().id(1).quantity(0).build();
     }
 
     @Test
-    public void testIncreaseQuantity(){
+    void testIncreaseQuantity(){
         assertEquals(0,this.stock.getQuantity());
         this.stock.increaseQuantity(10);
         assertEquals(10,this.stock.getQuantity());
     }
 
     @Test
-    public void testDecreaseQuantityWhenStockIsEnought(){
+    void testDecreaseQuantityWhenStockIsEnought(){
         this.stock.increaseQuantity(10);
         assertEquals(10,this.stock.getQuantity());
         this.stock.decreaseQuantity(10);
@@ -35,7 +32,7 @@ public class StockTest {
     }
 
     @Test
-    public void testDecreaseQuantityWhenStockIsNotEnought(){
+    void testDecreaseQuantityWhenStockIsNotEnought(){
         assertEquals(0,this.stock.getQuantity());
         assertThrows(NotEnoughStockQuantityException.class,() -> {
             this.stock.decreaseQuantity(10);
