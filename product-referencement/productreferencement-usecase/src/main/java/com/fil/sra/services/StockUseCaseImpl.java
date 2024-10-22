@@ -1,5 +1,7 @@
 package com.fil.sra.services;
 
+import com.fil.sra.exception.NotEnoughStockQuantityException;
+import com.fil.sra.models.Stock;
 import com.fil.sra.ports.IStockRepository;
 import com.fil.sra.ports.IStockUseCase;
 
@@ -12,7 +14,11 @@ public class StockUseCaseImpl implements IStockUseCase  {
         this.stockRepository = stockRepository;
     }
 
-    public void updateStock(int id, int quantity) {
-        stockRepository.updateStock(id, quantity);
+    public Void updateStock(int id, int quantity) {
+        Stock stock = stockRepository.updateStock(id, quantity);
+        if (stock == null) {
+            throw new NotEnoughStockQuantityException("Stock not found");
+        }
+        return null;
     }
 } 

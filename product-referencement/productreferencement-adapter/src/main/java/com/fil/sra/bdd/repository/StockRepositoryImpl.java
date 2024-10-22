@@ -20,27 +20,23 @@ public class StockRepositoryImpl implements IStockRepository {
         this.stockEntityMapper = stockEntityMapper;
     }
 
-    public Optional<Void> updateStock(int id, int quantity) {
-        StockEntity stockEntity = stockJPARepository.findByArticleId(id);
-        stockEntity.setQuantity(quantity);
-        stockJPARepository.save(stockEntity);
-        return Optional.empty();
+    public Stock updateStock(int id, int quantity) {
+        Optional<StockEntity> stockEntity = stockJPARepository.findByArticleId(id);
+        if (!stockEntity.isPresent()) return null;
+        stockEntity.get().setQuantity(quantity);
+        StockEntity savedEntity =  stockJPARepository.save(stockEntity.get());
+        return stockEntityMapper.toStock(savedEntity);
     }
 
-    public Optional<Stock> getStock(int id) {
-        StockEntity stockEntity = stockJPARepository.findById(id);
-        Stock stock = Stock.builder()
-                .id(stockEntity.getId())
-                .quantity(stockEntity.getQuantity())
-                .build();
-        return Optional.of(stock);
+    public Stock getStock(int id) {
+        Optional<StockEntity> stockEntity = stockJPARepository.findById(id);
+        if (!stockEntity.isPresent()) return null;
+        return stockEntityMapper.toStock(stockEntity.get());
     }
 
-    @Override
-    public Optional<Void> addStock(Stock stock) {
+    public Stock addStock(Stock stock) {
         StockEntity stockEntity = stockEntityMapper.toStockEntity(stock);
-        stockJPARepository.save(stockEntity);
-        return Optional.empty();
+        StockEntity savedStockEntity = stockJPARepository.save(stockEntity);
+        return stockEntityMapper.toStock(savedStockEntity);
     }
-
 }

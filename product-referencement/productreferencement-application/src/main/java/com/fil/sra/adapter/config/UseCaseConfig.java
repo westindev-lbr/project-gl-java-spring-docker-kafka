@@ -19,7 +19,7 @@ public class UseCaseConfig {
     }
 
     @Bean
-    public IStockUseCase stockUseCase(@Qualifier("stockRepository") IStockRepository stockRepository) {
+    public IStockUseCase stockUseCase(IStockRepository stockRepository) {
         return new StockUseCaseImpl(stockRepository);
     }
 }
