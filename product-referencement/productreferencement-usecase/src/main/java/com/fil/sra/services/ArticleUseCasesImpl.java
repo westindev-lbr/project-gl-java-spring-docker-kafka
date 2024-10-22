@@ -35,8 +35,17 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
 
     @Override
     public List<ArticleDto> getPaginatedArticles(ResearchArticleRequestDto search) {
-        List<Article> articles = articleRepository.getArticlesByCriteria(search.getEan(),search.getSubName(),search.getCategories(),search.getPaginationSize(),search.getPageNumber());
-        return articles.stream().map(article -> ArticleDtoMapper.INSTANCE.toArticleDto(article)).toList();
+        List<Article> articles = articleRepository.getArticlesByCriteria(
+            search.getEan(),
+            search.getSubName(),
+            search.getCategories(),
+            search.getPaginationSize(),
+            search.getPageNumber());
+
+        return articles.stream().map(article -> {
+            Stock stockArticle = stockRepository.getStockByArticleId(article.getId());
+            return ArticleDtoMapper.INSTANCE.toArticleWithQuantityDto(article, stockArticle.getQuantity());
+        }).toList();
     }
 
     @Override
