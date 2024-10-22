@@ -7,11 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
+import java.lang.reflect.Type;
+
+
 public class Proxy {
 
+    private final RestTemplate rest;
+
+    public Proxy(RestTemplate rest){
+        this.rest = rest;
+    }
+
     public <T> T getTemplate(String url,Class<T> responseType){
-        RestTemplate rest = new RestTemplate();
         ResponseEntity<T> response = rest.exchange(
                 url,
                 HttpMethod.GET,
@@ -20,18 +27,19 @@ public class Proxy {
         return response.getBody();
     }
 
-    public <T> T getParametizeTemplate(String url){
+    public <T> T getParametizeTemplateList(String url, Type responseType){
         RestTemplate rest = new RestTemplate();
         ResponseEntity<T> response = rest.exchange(
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<T>() {});
+                ParameterizedTypeReference.forType(responseType)
+        );
         return response.getBody();
     }
 
+
     public <T> T editTemplate(String url,Class<T> responseType,T obj,HttpMethod meth){
-        RestTemplate rest = new RestTemplate();
         HttpEntity<T> request = new HttpEntity<T>(obj);
         ResponseEntity<T> response = rest.exchange(
                 url,
@@ -49,7 +57,6 @@ public class Proxy {
     }
 
     public void deleteTemplate(String url){
-        RestTemplate rest = new RestTemplate();
         //ResponseEntity<Void> response =
         rest.exchange(
                 url,
