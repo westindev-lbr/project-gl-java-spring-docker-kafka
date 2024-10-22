@@ -1,4 +1,4 @@
-package com.fil.sra.port;
+package com.fil.sra.ports;
 
 import com.fil.sra.models.Perishable;
 

@@ -1,11 +1,11 @@
-package com.fil.sra.bdd.service;
+package com.fil.sra.bdd.repository;
 
 import com.fil.sra.bdd.entity.PerishableEntity;
 import com.fil.sra.bdd.mapper.PerishableEntityMapper;
-import com.fil.sra.bdd.repository.PerishableJPARepository;
 import com.fil.sra.models.Perishable;
-import com.fil.sra.port.IArticleRepository;
-import com.fil.sra.port.IPerishableRepository;
+import com.fil.sra.ports.IArticleRepository;
+import com.fil.sra.ports.IPerishableRepository;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +32,6 @@ public class PerishableRepositoryImpl implements IPerishableRepository {
 
     @Override
     public Perishable updatePerishable(Perishable perishable) {
-        articleRepository.updateArticle(perishable);
         return this.perishableJPARepository.findById(perishable.getId()).map( e -> {
             if(perishable.getBestBefore()!=null) e.setBestBefore(perishable.getBestBefore());
             if(perishable.getLot()!=null) e.setLot(perishable.getLot());

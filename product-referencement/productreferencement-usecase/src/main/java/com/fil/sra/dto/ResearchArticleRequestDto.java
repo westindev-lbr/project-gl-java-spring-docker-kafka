@@ -1,7 +1,5 @@
 package com.fil.sra.dto;
 
-
-import com.fil.sra.models.Category;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
