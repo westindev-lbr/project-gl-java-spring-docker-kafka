@@ -1,6 +1,8 @@
-package com.fil.sra.db.entity;
+package com.fil.sra.bdd.entity;
 
-import lombok.Builder;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +11,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MarketOperationLeastPriceyEntity extends MarketOperationEntity {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     protected int valueOrPercentReduction;
 
 }

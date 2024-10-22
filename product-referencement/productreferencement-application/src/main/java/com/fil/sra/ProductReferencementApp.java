@@ -11,11 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(includeFilters = @ComponentScan.Filter(classes = Usecase.class))
-public class ProductReferencementApp implements CommandLineRunner {
+public class ProductReferencementApp{
     public static void main(String[] args) {
         SpringApplication.run(ProductReferencementApp.class, args);
-    }
-    @Override
-    public void run(String... args) throws Exception {
     }
 }

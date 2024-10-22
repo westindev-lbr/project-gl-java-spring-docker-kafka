@@ -1,4 +1,4 @@
-package com.fil.sra.mapper;
+package com.fil.sra.bdd.mapper;
 
 import org.mapstruct.Mapper;
 
