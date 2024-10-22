@@ -1,5 +1,6 @@
-package com.fil.sra.model;
+package com.fil.sra.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
-public abstract class MarketOperation {
+public abstract class MarketOperationDTO {
 
     protected String name;
 
@@ -18,9 +19,8 @@ public abstract class MarketOperation {
 
     protected Date endDate;
 
-    protected List<Product> products;
+    protected List<ProductDTO> products;
 
-    protected TypeMarketOperation type;
+    protected TypeOfMarketOperationDTO type;
 
-    protected abstract int applyDiscount();
 }

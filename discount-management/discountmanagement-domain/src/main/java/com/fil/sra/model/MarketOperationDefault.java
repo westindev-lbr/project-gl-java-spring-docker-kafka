@@ -1,11 +1,11 @@
 package com.fil.sra.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+
+
+@SuperBuilder
 @Getter
 @Setter
 public class MarketOperationDefault extends MarketOperation{
@@ -14,7 +14,6 @@ public class MarketOperationDefault extends MarketOperation{
 
     protected boolean isPercent;
 
-    @Override
     protected int applyDiscount() {
         return 0;
     }

@@ -1,21 +1,17 @@
-package com.fil.sra.model;
+package com.fil.sra.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
 @Getter
 @Setter
-public class MarketOperationLot extends MarketOperation{
+@SuperBuilder
+public class MarketOperationLotDTO extends MarketOperationDTO{
 
     protected int numberForLot;
 
     protected double priceForLot;
 
-    protected int applyDiscount() {
-        return 0;
-    }
 }
