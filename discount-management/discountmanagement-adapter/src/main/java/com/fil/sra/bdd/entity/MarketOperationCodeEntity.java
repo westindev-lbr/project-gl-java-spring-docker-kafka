@@ -12,10 +12,6 @@ import lombok.Setter;
 @Setter
 public class MarketOperationCodeEntity extends MarketOperationEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     private String code;
 
 }

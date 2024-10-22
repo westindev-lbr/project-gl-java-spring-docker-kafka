@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 public abstract class MarketOperationEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     protected String name;
