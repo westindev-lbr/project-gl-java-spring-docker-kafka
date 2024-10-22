@@ -1,14 +1,13 @@
-package com.fil.sra.model;
+package com.fil.sra.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
-public class MarketOperationCode extends MarketOperationDefault{
+@Builder
+public class MarketOperationCodeDTO extends MarketOperationDTO{
 
     protected String code;
 

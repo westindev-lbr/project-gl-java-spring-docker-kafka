@@ -1,18 +1,16 @@
-package com.fil.sra.model;
+package com.fil.sra.db.entity;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
+@NoArgsConstructor
 @Getter
 @Setter
-public class MarketOperationDefault extends MarketOperation{
+public class MarketOperationLeastPriceyEntity extends MarketOperationEntity {
 
-    protected double value;
-
-    protected boolean isPercent;
+    protected int valueOrPercentReduction;
 
     protected int applyDiscount() {
         return 0;

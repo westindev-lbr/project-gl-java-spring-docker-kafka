@@ -1,20 +1,21 @@
-package com.fil.sra.model;
+package com.fil.sra.db.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
+@NoArgsConstructor
 @Getter
 @Setter
-public class MarketOperationLot extends MarketOperation{
+public class MarketOperationLotEntity extends MarketOperationEntity{
 
     protected int numberForLot;
 
     protected double priceForLot;
 
+
     protected int applyDiscount() {
         return 0;
     }
+
 }
