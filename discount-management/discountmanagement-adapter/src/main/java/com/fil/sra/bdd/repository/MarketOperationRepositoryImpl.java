@@ -8,16 +8,23 @@ import com.fil.sra.model.MarketOperation;
 import com.fil.sra.repository.MarketOperationRepository;
 import com.fil.sra.service.dto.ProductDto;
 import com.fil.sra.service.proxy.ProductProxy;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Component
 public class MarketOperationRepositoryImpl implements MarketOperationRepository {
 
-    protected MarketOperationJPARepository marketOperationJPARepository;
+    private final MarketOperationJPARepository marketOperationJPARepository;
 
     protected MapperEntityToModelVV mapperEntityToModelVV;
 
     protected ProductProxy productProxy;
+
+    public MarketOperationRepositoryImpl(MarketOperationJPARepository marketOperationJPARepository){
+        this.marketOperationJPARepository = marketOperationJPARepository;
+    }
 
     public MarketOperation addOperation(MarketOperation marketOperation) throws ProductDoesNotExistException {
         MarketOperationEntity entity = mapperEntityToModelVV.toMarketOperationEntity(marketOperation);

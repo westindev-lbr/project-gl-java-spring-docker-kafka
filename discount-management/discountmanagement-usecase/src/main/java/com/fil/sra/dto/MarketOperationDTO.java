@@ -13,6 +13,8 @@ import java.util.List;
 @SuperBuilder(toBuilder = true)
 public abstract class MarketOperationDTO {
 
+    protected int id;
+
     protected String name;
 
     protected Date startDate;

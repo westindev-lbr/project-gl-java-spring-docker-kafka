@@ -5,6 +5,7 @@ import com.fil.sra.model.MarketOperation;
 
 import java.util.List;
 
+
 public interface MarketOperationRepository {
 
     MarketOperation addOperation(MarketOperation marketOperation) throws ProductDoesNotExistException;

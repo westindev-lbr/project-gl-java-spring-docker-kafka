@@ -1,5 +1,6 @@
 package com.fil.sra.usecase.impl;
 
+import com.fil.sra.annotation.Usecase;
 import com.fil.sra.dto.MarketOperationDTO;
 import com.fil.sra.dto.ProductDTO;
 import com.fil.sra.exception.ProductDoesNotExistException;
@@ -10,11 +11,16 @@ import com.fil.sra.usecase.MarketOperationUseCase;
 
 import java.util.List;
 
+@Usecase
 public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
 
-    public MarketOperationRepository marketOperationRepository;
+    private final MarketOperationRepository marketOperationRepository;
 
     private MapperDTOToModelVV mapperDTOToModelVV;
+
+    public MarketOperationUseCaseImpl(MarketOperationRepository marketOperationRepository) {
+        this.marketOperationRepository = marketOperationRepository;
+    }
 
     public MarketOperationDTO addMarketOperation(MarketOperationDTO marketOperationDTO, List<String> eans) {
         List<ProductDTO> productDTOS = List.of();

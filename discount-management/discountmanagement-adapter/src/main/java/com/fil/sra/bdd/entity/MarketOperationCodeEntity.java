@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MarketOperationCodeEntity extends MarketOperationEntity{
+public class MarketOperationCodeEntity extends MarketOperationDefaultEntity{
 
     private String code;
 

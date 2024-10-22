@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller(value = "/market-operation")
 public class MarketOperationController {
 
-    private MarketOperationUseCase marketOperationUseCase;
+    private final MarketOperationUseCase marketOperationUseCase;
+
+    public MarketOperationController(MarketOperationUseCase marketOperationUseCase) {
+        this.marketOperationUseCase = marketOperationUseCase;
+    }
 
     @PostMapping(value = "/add", consumes = "text/json")
     public ResponseEntity<MarketOperationDTO> addMarketOperation(@RequestBody AddMarketOperationQuery addMarketOperationQuery) {

@@ -12,6 +12,8 @@ import java.util.List;
 @SuperBuilder
 public abstract class MarketOperation {
 
+    protected int id;
+
     protected String name;
 
     protected Date startDate;

@@ -18,7 +18,7 @@ public class AddMarketOperationQuery {
 
     public Date endDate;
 
-    public int value;
+    public double value;
 
     public boolean isPercent;
 }
