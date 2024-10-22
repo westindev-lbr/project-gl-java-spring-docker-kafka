@@ -26,7 +26,7 @@ public class LoadDBConfig {
             log.info("Hello world!");
 
             ProductEntity p1 = new ProductEntity();
-            p1.setName("P1");
+            p1.setEan("P1");
             p1.setOriginalPrice(50);
 
             productJPARepository.save(p1);

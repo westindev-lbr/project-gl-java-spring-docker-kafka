@@ -17,10 +17,10 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private int actualPrice;
+    private double actualPrice;
 
-    private int originalPrice;
+    private double originalPrice;
 
-    private String name;
+    private String ean;
 
 }

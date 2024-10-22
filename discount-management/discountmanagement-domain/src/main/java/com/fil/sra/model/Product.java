@@ -7,9 +7,9 @@ import lombok.*;
 @Builder
 public class Product {
 
-    private int actualPrice;
+    private double actualPrice;
 
-    private int originalPrice;
+    private double originalPrice;
 
-    private String name;
+    private String ean;
 }
