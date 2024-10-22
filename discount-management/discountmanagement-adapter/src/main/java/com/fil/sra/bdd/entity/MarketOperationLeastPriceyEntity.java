@@ -11,9 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MarketOperationLeastPriceyEntity extends MarketOperationEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
     protected int valueOrPercentReduction;
 
 }

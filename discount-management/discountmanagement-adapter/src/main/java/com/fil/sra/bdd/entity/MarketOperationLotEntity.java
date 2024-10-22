@@ -11,9 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MarketOperationLotEntity extends MarketOperationEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
     protected int numberForLot;
 

@@ -16,7 +16,11 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private int actualPrice;
+
     private int originalPrice;
+
     private String name;
+
 }

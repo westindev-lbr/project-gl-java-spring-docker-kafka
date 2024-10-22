@@ -7,6 +7,8 @@ import java.util.List;
 
 public class MarketOperationRepositoryImpl implements MarketOperationRepository {
 
+    protected MarketOperationJPARepository marketOperationJPARepository;
+
     public List<MarketOperation> addOperation() {
         return List.of();
     }
