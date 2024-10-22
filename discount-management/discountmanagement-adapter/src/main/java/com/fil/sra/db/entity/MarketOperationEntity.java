@@ -7,7 +7,6 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
 @Getter
 @Setter
 public abstract class MarketOperationEntity {
