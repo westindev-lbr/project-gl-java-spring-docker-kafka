@@ -7,9 +7,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MarketOperationCode extends MarketOperationEntity{
+public class MarketOperationCodeEntity extends MarketOperationEntity{
 
-    protected int applyDiscount() {
-        return 0;
-    }
+    private String code;
+
 }

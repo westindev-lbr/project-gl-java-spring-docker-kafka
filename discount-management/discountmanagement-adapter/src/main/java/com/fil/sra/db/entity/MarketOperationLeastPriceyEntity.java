@@ -12,7 +12,4 @@ public class MarketOperationLeastPriceyEntity extends MarketOperationEntity {
 
     protected int valueOrPercentReduction;
 
-    protected int applyDiscount() {
-        return 0;
-    }
 }

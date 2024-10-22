@@ -11,8 +11,4 @@ public class MarketOperationOneFreeEntity extends MarketOperationEntity{
 
     protected int numberForOneFree;
 
-    protected int applyDiscount() {
-        return 0;
-    }
-
 }

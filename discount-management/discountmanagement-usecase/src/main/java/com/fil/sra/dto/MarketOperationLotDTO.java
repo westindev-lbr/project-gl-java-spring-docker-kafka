@@ -13,8 +13,4 @@ public class MarketOperationLotDTO extends MarketOperationDTO{
 
     protected double priceForLot;
 
-    protected int applyDiscount() {
-        return 0;
-    }
-
 }

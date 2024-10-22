@@ -13,9 +13,4 @@ public class MarketOperationLotEntity extends MarketOperationEntity{
 
     protected double priceForLot;
 
-
-    protected int applyDiscount() {
-        return 0;
-    }
-
 }

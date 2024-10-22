@@ -13,7 +13,4 @@ public class MarketOperationDefaultEntity extends MarketOperationEntity{
 
     protected boolean isPercent;
 
-    protected int applyDiscount() {
-        return 0;
-    }
 }

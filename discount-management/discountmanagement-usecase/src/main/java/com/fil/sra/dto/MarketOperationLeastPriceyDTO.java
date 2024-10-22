@@ -11,8 +11,4 @@ public class MarketOperationLeastPriceyDTO extends MarketOperationDTO{
 
     protected int valueOrPercentReduction;
 
-    protected int applyDiscount() {
-        return 0;
-    }
-
 }

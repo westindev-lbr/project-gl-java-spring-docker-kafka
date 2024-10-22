@@ -12,8 +12,4 @@ public class MarketOperationDefaultDTO extends MarketOperationDTO{
     protected double value;
 
     protected boolean isPercent;
-
-    protected int applyDiscount() {
-        return 0;
-    }
 }

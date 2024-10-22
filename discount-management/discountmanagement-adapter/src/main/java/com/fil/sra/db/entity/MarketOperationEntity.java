@@ -22,6 +22,4 @@ public abstract class MarketOperationEntity {
 
     protected TypeOfMarketOperationEntity type;
 
-    protected abstract int applyDiscount();
-
 }

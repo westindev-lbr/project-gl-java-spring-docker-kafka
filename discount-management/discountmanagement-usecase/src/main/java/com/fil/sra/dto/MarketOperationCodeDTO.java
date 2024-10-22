@@ -11,8 +11,4 @@ public class MarketOperationCodeDTO extends MarketOperationDTO{
 
     protected String code;
 
-    protected int applyDiscount(){
-        return 1;
-    }
-
 }

@@ -21,6 +21,4 @@ public abstract class MarketOperationDTO {
 
     protected TypeOfMarketOperationDTO type;
 
-    protected abstract int applyDiscount();
-
 }
