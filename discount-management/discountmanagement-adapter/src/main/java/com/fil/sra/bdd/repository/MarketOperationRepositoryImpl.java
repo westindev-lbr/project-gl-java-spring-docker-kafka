@@ -9,8 +9,8 @@ public class MarketOperationRepositoryImpl implements MarketOperationRepository 
 
     protected MarketOperationJPARepository marketOperationJPARepository;
 
-    public List<MarketOperation> addOperation() {
-        return List.of();
+    public MarketOperation addOperation() {
+        return null;
     }
 
 }

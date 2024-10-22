@@ -12,7 +12,7 @@ public class MarketOperationController {
 
     private MarketOperationUseCase marketOperationUseCase;
 
-    @PostMapping(value = "/add", consumes = "Content-type")
+    @PostMapping(value = "/add", consumes = "text/json")
     public ResponseEntity<MarketOperationDTO> addMarketOperation(@RequestBody MarketOperationDTO marketOperationDTO){
         return ResponseEntity.ofNullable(this.marketOperationUseCase.addMarketOperation());
     }

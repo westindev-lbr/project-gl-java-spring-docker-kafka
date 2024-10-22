@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MarketOperationRepository {
 
-    List<MarketOperation> addOperation();
+    MarketOperation addOperation();
 
 }
