@@ -5,7 +5,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public class MarketOperationDefaultDTO extends MarketOperationDTO{
 
     protected double value;

@@ -14,7 +14,7 @@ public class MarketOperationController {
 
     @PostMapping(value = "/add", consumes = "text/json")
     public ResponseEntity<MarketOperationDTO> addMarketOperation(@RequestBody MarketOperationDTO marketOperationDTO){
-        return ResponseEntity.ofNullable(this.marketOperationUseCase.addMarketOperation());
+        return ResponseEntity.ofNullable(this.marketOperationUseCase.addMarketOperation(marketOperationDTO));
     }
 
 }

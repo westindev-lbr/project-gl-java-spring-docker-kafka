@@ -4,5 +4,5 @@ import com.fil.sra.dto.MarketOperationDTO;
 
 public interface MarketOperationUseCase {
 
-    public MarketOperationDTO addMarketOperation();
+    public MarketOperationDTO addMarketOperation(MarketOperationDTO marketOperationDTO);
 }

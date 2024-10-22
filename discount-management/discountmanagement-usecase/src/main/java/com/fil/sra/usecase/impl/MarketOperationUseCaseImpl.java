@@ -12,9 +12,9 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
 
     private MapperDTOToModelVV mapperDTOToModelVV;
 
-    public MarketOperationDTO addMarketOperation() {
-        MarketOperation marketOperation = marketOperationRepository.addOperation();
+    public MarketOperationDTO addMarketOperation(MarketOperationDTO marketOperationDTO) {
+        MarketOperation marketOperation = marketOperationRepository.addOperation(mapperDTOToModelVV.toMarketOperation(marketOperationDTO));
         // SEND KAFKA IF VALIDE SINON RETURN null
-        return marketOperation;
+        return mapperDTOToModelVV.toMarketOperationDTO(marketOperation);
     }
 }

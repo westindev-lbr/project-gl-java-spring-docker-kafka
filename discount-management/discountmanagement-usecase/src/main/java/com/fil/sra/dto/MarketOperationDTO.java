@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public abstract class MarketOperationDTO {
 
     protected String name;

@@ -2,12 +2,9 @@ package com.fil.sra.bdd.mapper;
 
 import com.fil.sra.bdd.entity.*;
 import com.fil.sra.model.*;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ObjectFactory;
-import org.mapstruct.SubclassMapping;
+import org.mapstruct.*;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, subclassExhaustiveStrategy = SubclassExhaustiveStrategy.RUNTIME_EXCEPTION/* ,uses = { MarketOperationDefaultEntityMapper.class, MarketOperationLotEntityMapper.class, MarketOperationCodeEntityMapper.class, MarketOperationOneFreeEntityMapper.class, MarketOperationLeastPriceyEntityMapper.class }*/)
 public interface MapperEntityToModelVV {
 
     @SubclassMapping(source = MarketOperationDefaultEntity.class, target = MarketOperationDefault.class)
@@ -17,10 +14,10 @@ public interface MapperEntityToModelVV {
     @SubclassMapping(source = MarketOperationOneFreeEntity.class, target = MarketOperationOneFree.class)
     MarketOperation toMarketOperation(MarketOperationEntity marketOperationEntity);
 
-    @SubclassMapping(source = MarketOperationDefault.class, target = MarketOperationDefaultEntity.class)
-    @SubclassMapping(source = MarketOperationCode.class, target = MarketOperationCodeEntity.class)
-    @SubclassMapping(source = MarketOperationLeastPricey.class, target = MarketOperationLeastPriceyEntity.class)
-    @SubclassMapping(source = MarketOperationLot.class, target = MarketOperationLotEntity.class)
-    @SubclassMapping(source = MarketOperationOneFree.class, target = MarketOperationOneFreeEntity.class)
+    @InheritInverseConfiguration(name = "toMarketOperation")
     MarketOperationEntity toMarketOperationEntity(MarketOperation marketOperation);
+
+/*    MarketOperationEntity toMarketOperationEntity(MarketOperation marketOperation);
+
+    MarketOperation toMarketOperation(MarketOperationEntity marketOperationEntity);*/
 }
