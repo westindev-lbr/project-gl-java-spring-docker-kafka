@@ -8,10 +8,8 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CategoryEntityMapper {
-
     // Mapper instance to be used in the application
     CategoryEntityMapper INSTANCE = Mappers.getMapper(CategoryEntityMapper.class);
-
     Category toCategory(CategoryEntity entity);
     CategoryEntity toCategoryEntity(Category category);
 

@@ -2,6 +2,7 @@ package com.fil.sra.adapter.controller;
 
 import com.fil.sra.dto.ArticleDto;
 import com.fil.sra.dto.ResearchArticleRequestDto;
+import com.fil.sra.exception.CategoryNotFoundException;
 import com.fil.sra.ports.IArticleUseCases;
 import com.fil.sra.ports.IStockUseCase;
 
@@ -34,18 +35,24 @@ public class AdminController {
             @RequestParam(required = false) String subName,
             @RequestParam(defaultValue = "10") int paginationSize,
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(required = false) Integer articleId) {
+            @RequestParam(required = false) String ean){
 
         ResearchArticleRequestDto search = ResearchArticleRequestDto.builder()
-                .articleId(articleId)
+                .ean(ean)
                 .subName(subName)
                 .categories(categories)
                 .paginationSize(paginationSize)
                 .pageNumber(pageNumber)
                 .build();
 
-        return ResponseEntity.ok(articleUseCases.getPaginatedArticles(search));
+        try {
+            return ResponseEntity.ok(articleUseCases.getPaginatedArticles(search));
+        }catch (CategoryNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+
     }
+
 
     @PutMapping("/article/{articleId}/stock")
     public ResponseEntity<Void> updateProductStock(

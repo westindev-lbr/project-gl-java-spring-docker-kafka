@@ -8,7 +8,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ArticleEntityMapper {
-
     ArticleEntityMapper INSTANCE = Mappers.getMapper(ArticleEntityMapper.class);
 
     Article toArticle(ArticleEntity entity);
