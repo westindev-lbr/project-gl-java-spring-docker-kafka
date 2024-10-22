@@ -2,6 +2,7 @@ package com.fil.sra.adapter.config;
 
 import com.fil.sra.ports.IArticleRepository;
 import com.fil.sra.ports.IArticleUseCases;
+import com.fil.sra.ports.ICategoryRepository;
 import com.fil.sra.ports.IStockRepository;
 import com.fil.sra.ports.IStockUseCase;
 import com.fil.sra.services.ArticleUseCasesImpl;
@@ -13,8 +14,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UseCaseConfig {
     @Bean
-    public IArticleUseCases articleUseCases(IArticleRepository articleRepository) {
-        return new ArticleUseCasesImpl(articleRepository);
+    public IArticleUseCases articleUseCases(
+        IArticleRepository articleRepository, 
+        IStockRepository stockRepository,
+        ICategoryRepository categoryRepository
+        ) {
+        return new ArticleUseCasesImpl(articleRepository, stockRepository, categoryRepository);
     }
 
     @Bean

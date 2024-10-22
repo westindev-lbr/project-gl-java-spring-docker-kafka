@@ -3,7 +3,6 @@ package com.fil.sra.bdd.config;
 import com.fil.sra.models.Article;
 import com.fil.sra.models.Category;
 import com.fil.sra.models.Perishable;
-import com.fil.sra.models.Stock;
 import com.fil.sra.ports.IArticleRepository;
 import com.fil.sra.ports.ICategoryRepository;
 import com.fil.sra.ports.IStockRepository;
@@ -46,13 +45,6 @@ public class LoadDBConfig {
                     .categories(List.of(c1, c2))
                     .build();
 
-            Stock s1 = Stock.builder()
-                    .article(p1)
-                    .quantity(10)
-                    .build();
-
-            
-
             Perishable p2 =  Perishable.builder()
                     .name("ProductPerish")
                     .ean("ean2")
@@ -61,8 +53,8 @@ public class LoadDBConfig {
                     .bestBefore(new Date())
                     .build();
 
-            articleRepository.createArticle(p2);
-            articleRepository.createArticle(p2);
+            articleRepository.addArticle(p1, 10);
+            articleRepository.addArticle(p2, 5);
 
             log.info("GetArticlesByCriteria :");
 

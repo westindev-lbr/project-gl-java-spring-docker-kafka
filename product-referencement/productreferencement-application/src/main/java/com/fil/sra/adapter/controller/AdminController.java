@@ -1,18 +1,23 @@
 package com.fil.sra.adapter.controller;
 
 import com.fil.sra.dto.ArticleDto;
+import com.fil.sra.dto.CreateArticleCommand;
 import com.fil.sra.dto.ResearchArticleRequestDto;
+import com.fil.sra.exception.NotFoundException;
 import com.fil.sra.exception.CategoryNotFoundException;
 import com.fil.sra.ports.IArticleUseCases;
 import com.fil.sra.ports.IStockUseCase;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @Slf4j
@@ -63,6 +68,19 @@ public class AdminController {
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             log.error("Error while updating stock", e);
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/article/add")
+    public ResponseEntity<ArticleDto> addArticle(@RequestBody CreateArticleCommand command) {
+        try {
+            return ResponseEntity.ok(articleUseCases.createArticle(command));
+        } catch (NotFoundException e) {
+            log.error("Error not found", e);
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            log.error("Error while creating article", e);
             return ResponseEntity.badRequest().build();
         }
     }

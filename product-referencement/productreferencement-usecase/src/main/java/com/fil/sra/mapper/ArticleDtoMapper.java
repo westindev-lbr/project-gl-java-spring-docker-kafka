@@ -12,4 +12,5 @@ public interface ArticleDtoMapper {
     Article toArticle(ArticleDto dto);
     //@Mapping(target = "categories", source = "categories")
     ArticleDto toArticleDto(Article article);
+    ArticleDto toArticleWithQuantityDto(Article article, int quantity);
 }

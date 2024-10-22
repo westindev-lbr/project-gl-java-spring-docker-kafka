@@ -7,6 +7,7 @@ import com.fil.sra.ports.IStockRepository;
 
 import java.util.Optional;
 
+import org.hibernate.annotations.DialectOverride.OverridesAnnotation;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,15 +29,24 @@ public class StockRepositoryImpl implements IStockRepository {
         return stockEntityMapper.toStock(savedEntity);
     }
 
+    
     public Stock getStock(int id) {
         Optional<StockEntity> stockEntity = stockJPARepository.findById(id);
         if (!stockEntity.isPresent()) return null;
         return stockEntityMapper.toStock(stockEntity.get());
     }
 
+    @Override
     public Stock addStock(Stock stock) {
         StockEntity stockEntity = stockEntityMapper.toStockEntity(stock);
         StockEntity savedStockEntity = stockJPARepository.save(stockEntity);
         return stockEntityMapper.toStock(savedStockEntity);
+    }
+
+    @Override
+    public Stock getStockByArticleId(int articleId) {
+        Optional<StockEntity> stockEntity = stockJPARepository.findByArticleId(articleId);
+        if (!stockEntity.isPresent()) return null;
+        return stockEntityMapper.toStock(stockEntity.get());
     }
 }

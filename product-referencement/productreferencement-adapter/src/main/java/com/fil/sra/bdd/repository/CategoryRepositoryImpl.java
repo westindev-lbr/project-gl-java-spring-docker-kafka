@@ -1,5 +1,7 @@
 package com.fil.sra.bdd.repository;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import com.fil.sra.bdd.entity.CategoryEntity;
@@ -24,6 +26,13 @@ public class CategoryRepositoryImpl implements ICategoryRepository {
         CategoryEntity savedEntity =  categoryJPARepository.save(categoryEntity);
         if (savedEntity == null) return null;
         return categoryEntityMapper.toCategory(savedEntity);
+    }
+
+    @Override
+    public Category getCategoryByName(String name) {
+        Optional<CategoryEntity> categoryEntity = categoryJPARepository.findByName(name);
+        if (!categoryEntity.isPresent()) return null;
+        return categoryEntityMapper.toCategory(categoryEntity.get());
     }
 
 }
