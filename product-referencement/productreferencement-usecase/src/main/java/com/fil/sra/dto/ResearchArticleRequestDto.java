@@ -1,7 +1,5 @@
 package com.fil.sra.dto;
 
-
-import com.fil.sra.models.Category;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +13,5 @@ public class ResearchArticleRequestDto {
     private String subName;
     private int paginationSize;
     private int pageNumber;
-    private Integer articleId;
+    private String ean;
 }

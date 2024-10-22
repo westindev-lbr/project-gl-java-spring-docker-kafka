@@ -61,8 +61,8 @@ public class LoadDBConfig {
                     .bestBefore(new Date())
                     .build();
 
-            articleRepository.addArticle(p1);
-            articleRepository.addArticle(p2);
+            articleRepository.createArticle(p2);
+            articleRepository.createArticle(p2);
 
             log.info("GetArticlesByCriteria :");
 

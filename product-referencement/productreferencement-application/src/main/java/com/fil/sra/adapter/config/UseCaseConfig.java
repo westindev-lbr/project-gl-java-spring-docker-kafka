@@ -7,7 +7,6 @@ import com.fil.sra.ports.IStockUseCase;
 import com.fil.sra.services.ArticleUseCasesImpl;
 import com.fil.sra.services.StockUseCaseImpl;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

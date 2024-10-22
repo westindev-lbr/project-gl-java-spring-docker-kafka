@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CategoryJPARepository extends CrudRepository<CategoryEntity, Integer> {
     Optional<CategoryEntity> findByName(String name);  // Renvoie directement une catégorie
-    <S extends CategoryEntity> S save(S category);
+
 }
