@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -66,19 +65,19 @@ public class ArticleRepositoryImpl implements IArticleRepository {
     }
 
     @Override
-    public Optional<Void> addArticle(Article article) {
+    public Article addArticle(Article article) {
         ArticleEntity articleEntity = articleEntityMapper.toArticleEntity(article);
-        Optional<ArticleEntity> articleSaved = articleJPARepository.save(articleEntity);
+        ArticleEntity articleSaved = articleJPARepository.save(articleEntity);
+        if (articleSaved == null)
+            return null;
 
-        if (articleSaved.isPresent()) {
-            ArticleEntity articleEntitySaved = articleSaved.get();
-            StockEntity stockEntity = new StockEntity();
-            stockEntity.setQuantity(0);
-            stockEntity.setArticle(articleEntitySaved);
-            stockJPARepository.save(stockEntity);
-            return Optional.empty();
-        }
-        return Optional.empty();
+        StockEntity stockEntity = new StockEntity();
+        stockEntity.setQuantity(0);
+        stockEntity.setArticle(articleSaved);
+
+        StockEntity stockSaved = stockJPARepository.save(stockEntity);
+        if (stockSaved == null)
+            return null;
+        return articleEntityMapper.toArticle(articleSaved);
     }
-
 }
