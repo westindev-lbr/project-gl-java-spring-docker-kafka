@@ -1,4 +1,4 @@
-package com.fil.sra.db.entity;
+package com.fil.sra.bdd.entity;
 
 public enum TypeOfMarketOperationEntity {
     CODE,
