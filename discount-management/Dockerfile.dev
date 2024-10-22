@@ -1,0 +1,41 @@
+# Utiliser une image de base Java
+FROM openjdk:17-jdk-slim
+
+# Définir les variables d'environnement pour Maven
+ENV MAVEN_VERSION=3.8.4
+ENV MAVEN_HOME=/usr/share/maven
+ENV PATH=${MAVEN_HOME}/bin:${PATH}
+
+# Installer Maven
+RUN apt-get update && \
+    apt-get install -y curl tar && \
+    curl -fsSL https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -o /tmp/apache-maven.tar.gz && \
+    mkdir -p ${MAVEN_HOME} && \
+    tar -xzf /tmp/apache-maven.tar.gz -C ${MAVEN_HOME} --strip-components=1 && \
+    rm -f /tmp/apache-maven.tar.gz && \
+    apt-get clean
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier le fichier pom.xml et télécharger les dépendances Maven
+COPY pom.xml . 
+COPY discountmanagement-adapter ./discountmanagement-adapter
+COPY discountmanagement-domain ./discountmanagement-domain
+COPY discountmanagement-usecase ./discountmanagement-usecase
+COPY discountmanagement-application ./discountmanagement-application
+
+# Télécharger les dépendances Maven
+RUN mvn dependency:go-offline
+
+# Copier le reste du code source
+COPY . .
+
+# Compiler le projet
+RUN mvn clean install
+
+# Exposer le port de l'application
+EXPOSE 8083
+
+# Démarrer l'application
+CMD ["sh", "-c", "cd productreferencement-application && mvn spring-boot:run"]

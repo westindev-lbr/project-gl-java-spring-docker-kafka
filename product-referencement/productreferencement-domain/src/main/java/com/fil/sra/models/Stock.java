@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class Stock {
+
     protected int id;
     protected int quantity;
     protected Article article;
