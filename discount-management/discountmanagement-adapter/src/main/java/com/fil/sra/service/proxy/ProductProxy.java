@@ -38,6 +38,7 @@ public class ProductProxy extends Proxy{
 
         Type responseType = new ParameterizedTypeReference<List<ProductDto>>() {}.getType();
         String uri =  builder.toUriString();
+        System.out.println(uri);
         return super.getParametizeTemplateList(uri, responseType);
     }
 

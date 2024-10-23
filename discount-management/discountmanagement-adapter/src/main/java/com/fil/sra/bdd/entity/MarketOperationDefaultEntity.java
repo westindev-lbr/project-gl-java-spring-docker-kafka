@@ -1,8 +1,6 @@
 package com.fil.sra.bdd.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,9 +8,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class MarketOperationDefaultEntity extends MarketOperationEntity{
 
-    protected double value;
+    protected double discounted_value;
 
     protected boolean isPercent;
 

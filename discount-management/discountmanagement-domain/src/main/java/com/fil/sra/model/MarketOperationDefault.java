@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class MarketOperationDefault extends MarketOperation{
 
-    protected double value;
+    protected double discounted_value;
 
     protected boolean isPercent;
 

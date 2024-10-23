@@ -5,10 +5,10 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public class MarketOperationDefaultDTO extends MarketOperationDTO{
 
-    protected double value;
+    protected double discounted_value;
 
     protected boolean isPercent;
 }
