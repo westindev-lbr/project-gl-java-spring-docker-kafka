@@ -9,6 +9,7 @@ import com.fil.sra.model.MarketOperation;
 import com.fil.sra.repository.MarketOperationRepository;
 import com.fil.sra.usecase.MarketOperationUseCase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Usecase
@@ -16,14 +17,15 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
 
     private final MarketOperationRepository marketOperationRepository;
 
-    private MapperDTOToModelVV mapperDTOToModelVV;
+    private final MapperDTOToModelVV mapperDTOToModelVV;
 
-    public MarketOperationUseCaseImpl(MarketOperationRepository marketOperationRepository) {
+    public MarketOperationUseCaseImpl(MarketOperationRepository marketOperationRepository, MapperDTOToModelVV mapperDTOToModelVV) {
         this.marketOperationRepository = marketOperationRepository;
+        this.mapperDTOToModelVV =  mapperDTOToModelVV;
     }
 
     public MarketOperationDTO addMarketOperation(MarketOperationDTO marketOperationDTO, List<String> eans) {
-        List<ProductDTO> productDTOS = List.of();
+        List<ProductDTO> productDTOS = new ArrayList<>();
         for(String ean : eans){
             ProductDTO productDTO = ProductDTO.builder()
                     .ean(ean)

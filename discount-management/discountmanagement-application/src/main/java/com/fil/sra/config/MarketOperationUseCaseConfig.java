@@ -1,5 +1,6 @@
 package com.fil.sra.config;
 
+import com.fil.sra.mapper.MapperDTOToModelVV;
 import com.fil.sra.repository.MarketOperationRepository;
 import com.fil.sra.usecase.MarketOperationUseCase;
 import com.fil.sra.usecase.impl.MarketOperationUseCaseImpl;
@@ -11,8 +12,9 @@ public class MarketOperationUseCaseConfig {
 
     @Bean
     public MarketOperationUseCase marketOperationUseCase(
-            MarketOperationRepository marketOperationRepository
+            MarketOperationRepository marketOperationRepository,
+            MapperDTOToModelVV mapperDTOToModelVV
     ) {
-        return new MarketOperationUseCaseImpl(marketOperationRepository);
+        return new MarketOperationUseCaseImpl(marketOperationRepository,mapperDTOToModelVV);
     }
 }

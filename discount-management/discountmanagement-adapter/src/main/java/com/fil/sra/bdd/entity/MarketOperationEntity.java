@@ -1,8 +1,6 @@
 package com.fil.sra.bdd.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,10 +11,14 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "market_operation")
 public abstract class MarketOperationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     protected Integer id;
 
     protected String name;
@@ -25,8 +27,10 @@ public abstract class MarketOperationEntity {
 
     protected Date endDate;
 
+    @Transient
     protected List<ProductEntity> products;
 
+    @Enumerated(EnumType.ORDINAL)
     protected TypeOfMarketOperationEntity type;
 
 }

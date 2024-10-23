@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 public class MarketOperationDefaultDTO extends MarketOperationDTO{
 
-    protected double value;
+    protected double discounted_value;
 
     protected boolean isPercent;
 }

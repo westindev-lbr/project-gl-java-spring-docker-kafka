@@ -31,7 +31,7 @@ public class MarketOperationRepositoryImpl implements MarketOperationRepository 
     public MarketOperation addOperation(MarketOperation marketOperation) throws ProductDoesNotExistException {
         MarketOperationEntity entity = mapperEntityToModelVV.toMarketOperationEntity(marketOperation);
         for(ProductEntity productEntity : entity.getProducts()) {
-            List<ProductDto> temp = productProxy.getProductsByPage(productEntity.getEan(), null,null,10,1);
+            List<ProductDto> temp = productProxy.getProductsByPage(productEntity.getEan(), null,null,10,0);
             if(temp.size() == 1){
                 productEntity.setActualPrice(temp.get(0).getPrice());
                 productEntity.setOriginalPrice(temp.get(0).getPrice());
@@ -40,8 +40,8 @@ public class MarketOperationRepositoryImpl implements MarketOperationRepository 
                 throw new ProductDoesNotExistException("The Ean: " + temp.get(0) + " given doesn't exist in Product DB");
             }
         }
-        MarketOperationEntity entitySaved = marketOperationJPARepository.save(entity);
-        return marketOperation;
+        marketOperationJPARepository.save(entity);
+        return mapperEntityToModelVV.toMarketOperation(entity);
     }
 
 }
