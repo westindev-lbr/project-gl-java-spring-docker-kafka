@@ -38,4 +38,4 @@ RUN mvn clean install
 EXPOSE 8083
 
 # Démarrer l'application
-CMD ["sh", "-c", "cd productreferencement-application && mvn spring-boot:run"]
+CMD ["sh", "-c", "cd discountmanagement-application && mvn spring-boot:run"]
