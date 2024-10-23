@@ -34,6 +34,11 @@
             <artifactId>productreferencement-adapter</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- Dépendance Spring Kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

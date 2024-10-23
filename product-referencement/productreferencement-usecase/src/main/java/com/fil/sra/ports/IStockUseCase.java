@@ -1,5 +1,7 @@
 package com.fil.sra.ports;
 
+import com.fil.sra.dto.StockDto;
+
 public interface IStockUseCase {
-    Void updateStock(int articleId, int quantity);
+    StockDto updateStock(int articleId, int quantity);
 }
