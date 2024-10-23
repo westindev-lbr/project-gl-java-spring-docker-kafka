@@ -18,12 +18,14 @@ public class MarketOperationRepositoryImpl implements MarketOperationRepository 
 
     private final MarketOperationJPARepository marketOperationJPARepository;
 
-    protected MapperEntityToModelVV mapperEntityToModelVV;
+    private final MapperEntityToModelVV mapperEntityToModelVV;
 
-    protected ProductProxy productProxy;
+    private final ProductProxy productProxy;
 
-    public MarketOperationRepositoryImpl(MarketOperationJPARepository marketOperationJPARepository){
+    public MarketOperationRepositoryImpl(MarketOperationJPARepository marketOperationJPARepository,MapperEntityToModelVV mapperEntityToModelVV, ProductProxy productProxy){
         this.marketOperationJPARepository = marketOperationJPARepository;
+        this.productProxy = productProxy;
+        this.mapperEntityToModelVV = mapperEntityToModelVV;
     }
 
     public MarketOperation addOperation(MarketOperation marketOperation) throws ProductDoesNotExistException {
