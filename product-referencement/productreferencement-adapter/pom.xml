@@ -55,6 +55,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Dépendance Spring Kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

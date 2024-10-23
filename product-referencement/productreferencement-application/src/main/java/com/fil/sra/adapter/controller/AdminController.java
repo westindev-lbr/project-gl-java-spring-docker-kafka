@@ -1,8 +1,10 @@
 package com.fil.sra.adapter.controller;
 
+import com.fil.sra.bdd.service.KafkaProducerService;
 import com.fil.sra.dto.ArticleDto;
 import com.fil.sra.dto.CreateArticleCommand;
 import com.fil.sra.dto.ResearchArticleRequestDto;
+import com.fil.sra.dto.StockDto;
 import com.fil.sra.exception.NotFoundException;
 import com.fil.sra.exception.CategoryNotFoundException;
 import com.fil.sra.ports.IArticleUseCases;
@@ -10,14 +12,11 @@ import com.fil.sra.ports.IStockUseCase;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @Slf4j
@@ -26,12 +25,16 @@ public class AdminController {
 
     private final IArticleUseCases articleUseCases;
     private final IStockUseCase stockUseCase;
+    private final KafkaProducerService kafkaProducerService;
 
+    @Autowired
     public AdminController(
             IArticleUseCases articleUseCases,
-            IStockUseCase stockUseCase) {
+            IStockUseCase stockUseCase,
+            KafkaProducerService kafkaProducerService) {
         this.articleUseCases = articleUseCases;
         this.stockUseCase = stockUseCase;
+        this.kafkaProducerService = kafkaProducerService;
     }
 
     @GetMapping("/articles/search")
@@ -40,7 +43,7 @@ public class AdminController {
             @RequestParam(required = false) String subName,
             @RequestParam(defaultValue = "10") int paginationSize,
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(required = false) String ean){
+            @RequestParam(required = false) String ean) {
 
         ResearchArticleRequestDto search = ResearchArticleRequestDto.builder()
                 .ean(ean)
@@ -52,20 +55,20 @@ public class AdminController {
 
         try {
             return ResponseEntity.ok(articleUseCases.getPaginatedArticles(search));
-        }catch (CategoryNotFoundException e){
+        } catch (CategoryNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
 
     }
 
-
     @PutMapping("/article/{articleId}/stock")
-    public ResponseEntity<Void> updateProductStock(
+    public ResponseEntity<StockDto> updateProductStock(
             @PathVariable int articleId,
             @RequestParam int quantity) {
         try {
-            stockUseCase.updateStock(articleId, quantity);
-            return ResponseEntity.ok().build();
+            StockDto stockDto = stockUseCase.updateStock(articleId, quantity);
+            kafkaProducerService.sendMessage("Stock updated : " + stockDto.toString());
+            return ResponseEntity.ok(stockDto);
         } catch (Exception e) {
             log.error("Error while updating stock", e);
             return ResponseEntity.badRequest().build();
@@ -75,7 +78,9 @@ public class AdminController {
     @PostMapping("/article/add")
     public ResponseEntity<ArticleDto> addArticle(@RequestBody CreateArticleCommand command) {
         try {
-            return ResponseEntity.ok(articleUseCases.createArticle(command));
+            ArticleDto article = articleUseCases.createArticle(command);
+            kafkaProducerService.sendMessage("Article created : " + article.toString());
+            return ResponseEntity.ok(article);
         } catch (NotFoundException e) {
             log.error("Error not found", e);
             return ResponseEntity.notFound().build();

@@ -3,7 +3,7 @@ server:
 spring:
   kafka:
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: kata-kafka:29092
     consumer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: kata-kafka:29092
       group-id: my-first-group
