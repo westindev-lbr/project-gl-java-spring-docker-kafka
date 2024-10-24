@@ -2,6 +2,11 @@ server:
   port: 8082
   forward-headers-strategy: framework
 spring:
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
   kafka:
     producer:
       bootstrap-servers: kata-kafka:29092
