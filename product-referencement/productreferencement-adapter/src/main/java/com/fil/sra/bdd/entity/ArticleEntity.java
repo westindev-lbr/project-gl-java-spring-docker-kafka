@@ -27,6 +27,9 @@ public class ArticleEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     protected List<CategoryEntity> categories;
 
-    @OneToOne(mappedBy = "article", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "article",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true
+    )
     protected StockEntity stockGlobal;
 }

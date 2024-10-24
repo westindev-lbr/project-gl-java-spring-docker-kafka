@@ -2,10 +2,11 @@ package com.fil.sra.services;
 
 import com.fil.sra.annotation.Usecase;
 import com.fil.sra.dto.ArticleDto;
-import com.fil.sra.dto.CreateArticleCommand;
+import com.fil.sra.dto.ArticleCommand;
 import com.fil.sra.dto.ResearchArticleRequestDto;
 import com.fil.sra.exception.DataIntegrityViolationException;
 import com.fil.sra.exception.NotFoundException;
+import com.fil.sra.mapper.ArticleCommandMapper;
 import com.fil.sra.mapper.ArticleDtoMapper;
 import com.fil.sra.models.Article;
 import com.fil.sra.models.Category;
@@ -35,10 +36,25 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
 
     @Override
     public List<ArticleDto> getPaginatedArticles(ResearchArticleRequestDto search) {
+
+        List<String> categoryNames = search.getCategories();
+        List<Category> categories = null;
+
+        // On vérifie les catégories
+        if (categoryNames != null && !categoryNames.isEmpty()) {
+            categories =  categoryNames.stream().map(name -> {
+                Category category = categoryRepository.getCategoryByName(name);
+                if (category == null) {
+                    throw new NotFoundException("Category " + name + " not found");
+                }
+                return category;
+            }).toList();
+        }
+
         List<Article> articles = articleRepository.getArticlesByCriteria(
             search.getEan(),
             search.getSubName(),
-            search.getCategories(),
+                categories,
             search.getPaginationSize(),
             search.getPageNumber());
 
@@ -49,22 +65,14 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
     }
 
     @Override
-    public ArticleDto createArticle(CreateArticleCommand command) {
+    public ArticleDto createArticle(ArticleCommand command) {
 
         List<Category> categories = command.categories()
                 .stream()
                 .map(categoryRepository::getCategoryByName)
                 .toList();
 
-        Article article = Article.builder()
-                .name(command.name())
-                .brand(command.brand())
-                .price(command.price())
-                .ean(command.ean())
-                .vat(command.vat())
-                .img(command.img())
-                .categories(categories)
-                .build();
+        Article article = ArticleCommandMapper.INSTANCE.toArticle(command,categories);
 
         Article articleSaved = articleRepository.addArticle(article, command.quantity());
         if (articleSaved == null) {
@@ -77,5 +85,25 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
         }
 
         return ArticleDtoMapper.INSTANCE.toArticleWithQuantityDto(articleSaved, stockArticle.getQuantity());
+    }
+
+    @Override
+    public void deleteArticle(Integer id) {
+        articleRepository.deleteArticle(id);
+    }
+
+    @Override
+    public ArticleDto updateArticle(Integer id,ArticleCommand command) {
+        List<Category> categories = command.categories().stream()
+                .map(categoryName -> {
+                    Category category = categoryRepository.getCategoryByName(categoryName);
+                    if (category == null) {
+                        throw new NotFoundException("Category not found: " + categoryName);
+                    }
+                    return category;
+                })
+                .toList();
+        Article article = ArticleCommandMapper.INSTANCE.toArticle(command,categories);
+        return ArticleDtoMapper.INSTANCE.toArticleDto(articleRepository.updateArticle(id,article));
     }
 }
