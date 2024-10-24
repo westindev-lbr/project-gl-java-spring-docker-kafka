@@ -84,25 +84,6 @@
 				</configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>productreferencement-application</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>
-                                com.fil.sra.ProductReferencementApp</mainClass>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
 		</plugins>
 	</build>
 </project>

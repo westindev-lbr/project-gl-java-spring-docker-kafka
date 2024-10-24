@@ -8,7 +8,9 @@ Axel LABARRE M2GL - <axel.labarre.etu@univ-lille.fr>
 
 Avoir démarrer le démon docker sur sa machine
 
-## Configuration de développement local
+## Configuration de développement en local
+
+Vous veillerez à ouvrir 3 terminaux au préalable pour les taches (1), (2.a) et (2.b)
 
 1. Lancement des conteneurs kafka :
 
@@ -21,15 +23,25 @@ Avoir démarrer le démon docker sur sa machine
     a. Product-Referencement
 
     ```sh
-    cd product-referencement
-    mvn clean install exec:java -pl productreferencement-application
+    cd product-referencement && mvn clean install
+    ```
+
+    puis
+
+    ```sh
+    cd productreferencement-application && mvn spring-boot:run
     ```
 
     b. Discount-Management :
 
     ```sh
-    cd discount-management
-    mvn clean install exec:java -pl discountmanagement-application
+    cd discount-management && mvn clean install
+    ```
+
+    puis
+
+    ```sh
+    cd discountmanagement-application && mvn spring-boot:run
     ```
 
 ## Configuration de pré-production

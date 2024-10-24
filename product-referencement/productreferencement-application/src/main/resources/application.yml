@@ -7,6 +7,8 @@ spring:
       enabled: true
       settings:
         web-allow-others: true
+  profiles:
+    active: local
 
 #Swagger Configuration
 springdoc:
