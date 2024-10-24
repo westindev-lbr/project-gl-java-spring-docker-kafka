@@ -10,6 +10,12 @@ import com.fil.sra.exception.CategoryNotFoundException;
 import com.fil.sra.ports.IArticleUseCases;
 import com.fil.sra.ports.IStockUseCase;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +43,22 @@ public class AdminController {
         this.kafkaProducerService = kafkaProducerService;
     }
 
+    @Operation(summary = "Search for paginated articles",
+            description = "Allows administrators to search articles by category, a substring in the product name, or an exact product reference (EAN). The result is a paginated list of articles.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the paginated list of articles",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = ArticleDto.class)))),
+            @ApiResponse(responseCode = "204", description = "No articles found matching the search criteria"),
+            @ApiResponse(responseCode = "400", description = "Invalid request parameters"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/articles/search")
     public ResponseEntity<List<ArticleDto>> getPaginatedArticles(
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false) String subName,
-            @RequestParam(defaultValue = "10") int paginationSize,
+            @RequestParam(defaultValue = "5") int paginationSize,
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(required = false) String ean) {
 
