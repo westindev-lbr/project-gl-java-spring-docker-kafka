@@ -78,6 +78,16 @@ public class AdminController {
 
     }
 
+    @Operation(summary = "Update product stock",
+            description = "Allows administrators to update the stock for products. Supports both classic products and perishable products (with expiration date). For perishable products, stock should be distinguished by expiration date.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated the product stock",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = StockDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request data or parameters"),
+            @ApiResponse(responseCode = "404", description = "Product not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PutMapping("/article/{articleId}/stock")
     public ResponseEntity<StockDto> updateProductStock(
             @PathVariable int articleId,
@@ -92,6 +102,16 @@ public class AdminController {
         }
     }
 
+    @Operation(summary = "Add a new article",
+            description = "Allows administrators to add a new article to the inventory. The article details are provided in the request body.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully created the article",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ArticleDto.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request or data provided"),
+            @ApiResponse(responseCode = "404", description = "Related resources not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping("/article/add")
     public ResponseEntity<ArticleDto> addArticle(@RequestBody CreateArticleCommand command) {
         try {
