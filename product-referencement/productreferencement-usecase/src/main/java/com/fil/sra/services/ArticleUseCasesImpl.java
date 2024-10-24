@@ -94,16 +94,12 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
 
     @Override
     public ArticleDto updateArticle(Integer id,ArticleCommand command) {
-        List<Category> categories = command.categories().stream()
-                .map(categoryName -> {
-                    Category category = categoryRepository.getCategoryByName(categoryName);
-                    if (category == null) {
-                        throw new NotFoundException("Category not found: " + categoryName);
-                    }
-                    return category;
-                })
-                .toList();
+        if(articleRepository.getArticle(id) == null){
+            throw new NotFoundException("Article not found");
+        }
+        List<Category> categories = categoryRepository.getAllCategoryByNames(command.categories());
         Article article = ArticleCommandMapper.INSTANCE.toArticle(command,categories);
-        return ArticleDtoMapper.INSTANCE.toArticleDto(articleRepository.updateArticle(id,article));
+        article.setId(id);
+        return ArticleDtoMapper.INSTANCE.toArticleDto(articleRepository.updateArticle(article));
     }
 }

@@ -30,24 +30,4 @@ public class StockEntity {
         this.article = article;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public ArticleEntity getArticle() {
-        return article;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setArticle(ArticleEntity article) {
-        this.article = article;
-    }
-
 }

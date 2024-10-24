@@ -25,31 +25,20 @@ public class ArticleRepositoryImpl implements IArticleRepository {
 
     private final ArticleJPARepository articleJPARepository;
     private final ArticleEntityMapper articleEntityMapper;
-    private final CategoryJPARepository categoryJPARepository;
-    private final CategoryEntityMapper categoryEntityMapper;
-    private final StockJPARepository stockJPARepository;
-    private final StockEntityMapper stockEntityMapper;
 
-    public ArticleRepositoryImpl(
-            ArticleJPARepository articleJPARepository,
-            ArticleEntityMapper articleEntityMapper,
-            CategoryJPARepository categoryJPARepository,
-            CategoryEntityMapper categoryEntityMapper,
-            StockJPARepository stockJPARepository,
-            StockEntityMapper stockEntityMapper) {
+    private final StockJPARepository stockJPARepository;
+
+    public ArticleRepositoryImpl(ArticleJPARepository articleJPARepository,ArticleEntityMapper articleEntityMapper, StockJPARepository stockJPARepository) {
         this.articleJPARepository = articleJPARepository;
         this.articleEntityMapper = articleEntityMapper;
-        this.categoryJPARepository = categoryJPARepository;
-        this.categoryEntityMapper = categoryEntityMapper;
         this.stockJPARepository = stockJPARepository;
-        this.stockEntityMapper = stockEntityMapper;
     }
 
     @Override
     public List<Article> getArticlesByCriteria(String ean, String subName, List<Category> categories, int paginationSize,
             int pageNumber) throws NotFoundException {
 
-        List<CategoryEntity> categoryEntities = categories.stream().map(categoryEntityMapper::toCategoryEntity).toList();
+        List<CategoryEntity> categoryEntities = categories.stream().map(CategoryEntityMapper.INSTANCE::toCategoryEntity).toList();
 
         // Création dynamique des critères de recherche
         Specification<ArticleEntity> spec = Specification.where(ArticleSpecification.hasEan(ean))
@@ -70,37 +59,16 @@ public class ArticleRepositoryImpl implements IArticleRepository {
 
     @Override
     public void deleteArticle(Integer articleId) {
-
         articleJPARepository.deleteById(articleId);
     }
 
     @Override
-    public Article updateArticle(Integer id, Article article) {
-        Optional<ArticleEntity> optionalEntity = articleJPARepository.findById(id);
-
-        if (optionalEntity.isPresent()) {
-            ArticleEntity articleEntity = optionalEntity.get();
-
-            // Mise à jour des champs de l'article
-            articleEntity.setName(article.getName());
-            articleEntity.setBrand(article.getBrand());
-            articleEntity.setPrice(article.getPrice());
-            articleEntity.setEan(article.getEan());
-            articleEntity.setVat((float) article.getVat());
-            articleEntity.setImg(article.getImg());
-            try {
-                Iterable<CategoryEntity> entities = categoryJPARepository.findAllById(article.getCategories().stream().map(Category::getId).toList());
-                articleEntity.setCategories((List<CategoryEntity>) entities);
-            }catch (IllegalArgumentException e){
-                throw new NotFoundException("One of the category sent is not not found");
-            }
-            articleJPARepository.save(articleEntity);
-            return articleEntityMapper.toArticle(articleEntity);
-        } else {
-            throw new NotFoundException("Article with id " + id + " not found");
-        }
+    public Article updateArticle(Article article) {
+        ArticleEntity articleEntity = articleJPARepository.save(articleEntityMapper.toArticleEntity(article));
+        return articleEntityMapper.toArticle(articleEntity);
     }
 
+    @Override
     public Article addArticle(Article article, int quantity) {
         ArticleEntity articleEntity = articleEntityMapper.toArticleEntity(article);
         ArticleEntity articleSaved = articleJPARepository.save(articleEntity);

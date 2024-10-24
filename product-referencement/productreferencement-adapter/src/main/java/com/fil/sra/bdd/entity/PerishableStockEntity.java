@@ -22,16 +22,11 @@ public class PerishableStockEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Temporal(TemporalType.DATE)
     private Date bestBefore;
-
     private String lot;
     private int quantity;
 
     @ManyToOne
-    private StockEntity globalStock;
-
-    @ManyToOne()
-    private ArticleEntity article;
+    private PerishableEntity perishable;
 }
