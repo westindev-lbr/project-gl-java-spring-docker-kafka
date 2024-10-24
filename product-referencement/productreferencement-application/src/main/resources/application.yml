@@ -1,5 +1,6 @@
 server:
   port: 8082
+  forward-headers-strategy: framework
 spring:
   kafka:
     producer:
@@ -7,3 +8,11 @@ spring:
     consumer:
       bootstrap-servers: kata-kafka:29092
       group-id: my-first-group
+
+#Swagger Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
+    operationsSorter: method
+  api-docs:
+    path: /api-docs
