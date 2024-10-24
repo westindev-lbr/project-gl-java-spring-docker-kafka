@@ -1,4 +1,4 @@
-package com.fil.sra.body;
+package com.fil.sra.command;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +27,6 @@ public class AddMarketOperationCommand {
     public double numberForLot;
 
     public double priceForLot;
+
+    public double valueOrPercentReduction;
 }

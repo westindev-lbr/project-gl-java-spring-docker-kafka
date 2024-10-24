@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class MarketOperationLeastPricey extends MarketOperation {
 
-    protected int valueOrPercentReduction;
+    protected double valueOrPercentReduction;
 
     protected int applyDiscount() {
         return 0;

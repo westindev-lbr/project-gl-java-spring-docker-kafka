@@ -1,11 +1,10 @@
 package com.fil.sra.controller;
 
-import com.fil.sra.body.AddMarketOperationCommand;
+import com.fil.sra.command.AddMarketOperationCommand;
 import com.fil.sra.dto.MarketOperationDTO;
 import com.fil.sra.dto.MarketOperationDefaultDTO;
 import com.fil.sra.dto.TypeOfMarketOperationDTO;
 import com.fil.sra.usecase.MarketOperationUseCase;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,15 +21,10 @@ public class MarketOperationController {
     }
 
     @PostMapping(value = "/add/{type}", consumes = "application/json")
-    public ResponseEntity<MarketOperationDTO> addMarketOperation(@RequestBody @Valid AddMarketOperationCommand addMarketOperationCommand, @PathVariable(value = "type")String type) {
+    public ResponseEntity<MarketOperationDTO> addMarketOperation(@RequestBody  AddMarketOperationCommand addMarketOperationCommand, @PathVariable(value = "type")String type) {
         try{
             TypeOfMarketOperationDTO typeOfMarketOperationDTO = TypeOfMarketOperationDTO.valueOf(type);
-            MarketOperationDefaultDTO marketOperationDTO = MarketOperationDefaultDTO.builder()
-                    .startDate(addMarketOperationCommand.getStartDate())
-                    .endDate(addMarketOperationCommand.getEndDate())
-                    .discounted_value(addMarketOperationCommand.getValue())
-                    .isPercent(addMarketOperationCommand.isPercent()).build();
-            return ResponseEntity.ofNullable(this.marketOperationUseCase.addMarketOperation(marketOperationDTO, addMarketOperationCommand.getEans()));
+            return ResponseEntity.ofNullable(this.marketOperationUseCase.addMarketOperation(addMarketOperationCommand, typeOfMarketOperationDTO));
 
         }
         catch (IllegalArgumentException e){

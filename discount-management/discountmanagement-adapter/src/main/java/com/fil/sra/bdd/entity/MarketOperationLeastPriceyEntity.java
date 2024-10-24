@@ -11,6 +11,6 @@ import lombok.Setter;
 @Entity
 public class MarketOperationLeastPriceyEntity extends MarketOperationEntity {
 
-    protected int valueOrPercentReduction;
+    protected double valueOrPercentReduction;
 
 }
