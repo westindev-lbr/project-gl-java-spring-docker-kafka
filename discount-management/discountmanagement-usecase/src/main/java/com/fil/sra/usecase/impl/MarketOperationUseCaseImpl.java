@@ -42,4 +42,23 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
         }
         // SEND KAFKA IF VALIDE SINON RETURN null
     }
+
+    public List<MarketOperationDTO> getAllMarketOperations() {
+        List<MarketOperation> marketOperations = this.marketOperationRepository.getAllMarketOperations();
+        List<MarketOperationDTO> marketOperationDTOS = new ArrayList<>();
+        for(MarketOperation marketOperation : marketOperations){
+            marketOperationDTOS.add(mapperDTOToModelVV.toMarketOperationDTO(marketOperation));
+        }
+        return marketOperationDTOS;
+    }
+
+    public MarketOperationDTO getMarketOperationById(int id) {
+        return this.mapperDTOToModelVV.toMarketOperationDTO(this.marketOperationRepository.getMarketOperationById(id));
+    }
+
+    public void deleteMarketOperationById(int id) {
+        this.marketOperationRepository.deleteMarketOperationById(id);
+    }
+
+
 }
