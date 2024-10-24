@@ -7,12 +7,6 @@ spring:
       enabled: true
       settings:
         web-allow-others: true
-  kafka:
-    producer:
-      bootstrap-servers: kata-kafka:29092
-    consumer:
-      bootstrap-servers: kata-kafka:29092
-      group-id: my-first-group
 
 #Swagger Configuration
 springdoc:
