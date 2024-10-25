@@ -1,9 +1,7 @@
 package com.fil.sra.bdd.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import com.fil.sra.models.PerishableStock;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,13 +11,12 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @Entity(name = "perishable")
-public class PerishableEntity extends ArticleEntity {
-
+public class PerishableEntity extends ArticleEntity{
     @Temporal(TemporalType.DATE)
     private Date bestBefore;
-
-    @ManyToOne
-    private ArticleEntity article;
     private String lot;
-
+    @OneToOne(
+            cascade = CascadeType.ALL, orphanRemoval = true
+    )
+    private PerishableStockEntity perishableStock;
 }

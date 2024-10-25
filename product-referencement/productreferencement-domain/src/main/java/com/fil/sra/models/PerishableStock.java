@@ -10,8 +10,10 @@ import java.util.Date;
 @Setter
 @SuperBuilder
 public class PerishableStock extends Stock{
-    public Date bestBefore;
-    public String lot;
+    private Date bestBefore;
+    private String lot;
+    private Perishable perishable;
+
     @Override
     public void putBackInStock() {
         //TODO : to implement...

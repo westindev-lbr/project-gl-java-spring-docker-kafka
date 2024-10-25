@@ -5,7 +5,7 @@ import com.fil.sra.dto.ArticleDto;
 import com.fil.sra.dto.ArticleCommand;
 import com.fil.sra.dto.ResearchArticleRequestDto;
 import com.fil.sra.exception.DataIntegrityViolationException;
-import com.fil.sra.exception.NotFoundException;
+import com.fil.sra.exception.ResourceNotFoundException;
 import com.fil.sra.mapper.ArticleCommandMapper;
 import com.fil.sra.mapper.ArticleDtoMapper;
 import com.fil.sra.models.Article;
@@ -16,6 +16,7 @@ import com.fil.sra.ports.IArticleUseCases;
 import com.fil.sra.ports.ICategoryRepository;
 import com.fil.sra.ports.IStockRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Usecase
@@ -35,17 +36,17 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
     }
 
     @Override
-    public List<ArticleDto> getPaginatedArticles(ResearchArticleRequestDto search) {
+    public List<ArticleCommand> getPaginatedArticles(ResearchArticleRequestDto search) {
 
         List<String> categoryNames = search.getCategories();
-        List<Category> categories = null;
+        List<Category> categories = new ArrayList<>();
 
         // On vérifie les catégories
         if (categoryNames != null && !categoryNames.isEmpty()) {
             categories =  categoryNames.stream().map(name -> {
                 Category category = categoryRepository.getCategoryByName(name);
                 if (category == null) {
-                    throw new NotFoundException("Category " + name + " not found");
+                    throw new ResourceNotFoundException("Category " + name + " not found");
                 }
                 return category;
             }).toList();
@@ -60,7 +61,8 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
 
         return articles.stream().map(article -> {
             Stock stockArticle = stockRepository.getStockByArticleId(article.getId());
-            return ArticleDtoMapper.INSTANCE.toArticleWithQuantityDto(article, stockArticle.getQuantity());
+            int quantity = (stockArticle != null) ? stockArticle.getQuantity() : 0;
+            return ArticleCommandMapper.INSTANCE.toArticleCommand(article,quantity);
         }).toList();
     }
 
@@ -81,7 +83,7 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
 
         Stock stockArticle = stockRepository.getStockByArticleId(articleSaved.getId());
         if (stockArticle == null) {
-            throw new NotFoundException("Stock not found");
+            throw new ResourceNotFoundException("Stock not found");
         }
 
         return ArticleDtoMapper.INSTANCE.toArticleWithQuantityDto(articleSaved, stockArticle.getQuantity());
@@ -94,8 +96,9 @@ public class ArticleUseCasesImpl implements IArticleUseCases {
 
     @Override
     public ArticleDto updateArticle(Integer id,ArticleCommand command) {
-        if(articleRepository.getArticle(id) == null){
-            throw new NotFoundException("Article not found");
+        Article Articlefound = articleRepository.getArticle(id);
+        if(Articlefound == null){
+            throw new ResourceNotFoundException("Article not found");
         }
         List<Category> categories = categoryRepository.getAllCategoryByNames(command.categories());
         Article article = ArticleCommandMapper.INSTANCE.toArticle(command,categories);

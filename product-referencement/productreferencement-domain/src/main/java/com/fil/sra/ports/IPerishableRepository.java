@@ -7,4 +7,6 @@ public interface IPerishableRepository {
     Perishable createPerishable(Perishable perishable);
     Perishable updatePerishable(Perishable perishable);
     void deletePerishable(Integer id);
+
+    Perishable getPerishableByEan(String ean);
 }

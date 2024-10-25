@@ -1,7 +1,9 @@
 package com.fil.sra.bdd.repository;
 
+import com.fil.sra.bdd.entity.ArticleEntity;
 import com.fil.sra.bdd.entity.PerishableEntity;
 import com.fil.sra.bdd.mapper.PerishableEntityMapper;
+import com.fil.sra.exception.ResourceNotFoundException;
 import com.fil.sra.models.Perishable;
 import com.fil.sra.ports.IArticleRepository;
 import com.fil.sra.ports.IPerishableRepository;
@@ -42,5 +44,10 @@ public class PerishableRepositoryImpl implements IPerishableRepository {
     @Override
     public void deletePerishable(Integer id) {
         this.perishableJPARepository.deleteById(id);
+    }
+
+    @Override
+    public Perishable getPerishableByEan(String ean) {
+        return this.perishableJPARepository.findByEan(ean).map(PerishableEntityMapper.INSTANCE::toPerishable).orElseThrow(() -> new ResourceNotFoundException("Perishable not found"));
     }
 }

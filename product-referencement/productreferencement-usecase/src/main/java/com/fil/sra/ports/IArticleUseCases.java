@@ -7,7 +7,7 @@ import com.fil.sra.dto.ResearchArticleRequestDto;
 import java.util.List;
 
 public interface IArticleUseCases {
-    public List<ArticleDto> getPaginatedArticles(ResearchArticleRequestDto search);
+    List<ArticleCommand> getPaginatedArticles(ResearchArticleRequestDto search);
     ArticleDto createArticle(ArticleCommand command);
     void deleteArticle(Integer id);
 

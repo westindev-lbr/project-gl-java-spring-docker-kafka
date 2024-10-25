@@ -3,7 +3,7 @@ package com.fil.sra.bdd.repository;
 import java.util.List;
 import java.util.Optional;
 
-import com.fil.sra.exception.NotFoundException;
+import com.fil.sra.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.fil.sra.bdd.entity.CategoryEntity;
@@ -40,7 +40,7 @@ public class CategoryRepositoryImpl implements ICategoryRepository {
     public List<Category> getAllCategoryByNames(List<String> names){
         return names.stream().map(name ->{
             Category cat = getCategoryByName(name);
-            if(cat == null) throw new NotFoundException("Category : "+name+" not found");
+            if(cat == null) throw new ResourceNotFoundException("Category : "+name+" not found");
             return cat;
         }).toList();
     }

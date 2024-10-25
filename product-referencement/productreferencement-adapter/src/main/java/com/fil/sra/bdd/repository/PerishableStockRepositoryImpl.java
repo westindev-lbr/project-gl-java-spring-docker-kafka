@@ -23,13 +23,14 @@ public class PerishableStockRepositoryImpl implements IPerishableStockRepository
     }
 
     @Override
-    public PerishableStock updatePerishableStock(int id, int quantity) {
-
-        return null;
+    public PerishableStock updatePerishableStock(PerishableStock stock) {
+        PerishableStockEntity entity = perishableStockEntityMapper.toPerishableStockEntity(stock);
+        return perishableStockEntityMapper.toPerishableStock(perishableStockJPARepository.save(entity));
     }
 
     @Override
-    public PerishableStock addStock(PerishableStock stock) {
-        return null;
+    public PerishableStock addPerishableStock(PerishableStock stock) {
+        PerishableStockEntity entity = perishableStockEntityMapper.toPerishableStockEntity(stock);
+        return perishableStockEntityMapper.toPerishableStock(perishableStockJPARepository.save(entity));
     }
 }

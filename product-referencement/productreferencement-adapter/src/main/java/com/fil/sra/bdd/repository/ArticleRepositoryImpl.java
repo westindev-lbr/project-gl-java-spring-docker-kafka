@@ -7,7 +7,7 @@ import com.fil.sra.bdd.mapper.ArticleEntityMapper;
 import com.fil.sra.bdd.mapper.CategoryEntityMapper;
 import com.fil.sra.bdd.mapper.StockEntityMapper;
 import com.fil.sra.bdd.specification.ArticleSpecification;
-import com.fil.sra.exception.NotFoundException;
+import com.fil.sra.exception.ResourceNotFoundException;
 import com.fil.sra.models.Article;
 import com.fil.sra.models.Category;
 import com.fil.sra.ports.IArticleRepository;
@@ -36,7 +36,7 @@ public class ArticleRepositoryImpl implements IArticleRepository {
 
     @Override
     public List<Article> getArticlesByCriteria(String ean, String subName, List<Category> categories, int paginationSize,
-            int pageNumber) throws NotFoundException {
+            int pageNumber) throws ResourceNotFoundException {
 
         List<CategoryEntity> categoryEntities = categories.stream().map(CategoryEntityMapper.INSTANCE::toCategoryEntity).toList();
 
@@ -62,9 +62,11 @@ public class ArticleRepositoryImpl implements IArticleRepository {
         articleJPARepository.deleteById(articleId);
     }
 
+
     @Override
     public Article updateArticle(Article article) {
-        ArticleEntity articleEntity = articleJPARepository.save(articleEntityMapper.toArticleEntity(article));
+        ArticleEntity articleEntity = articleEntityMapper.toArticleEntity(article);
+        articleEntity = articleJPARepository.save(articleEntity);
         return articleEntityMapper.toArticle(articleEntity);
     }
 

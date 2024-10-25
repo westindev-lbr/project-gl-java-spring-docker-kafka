@@ -21,6 +21,9 @@ public interface ArticleCommandMapper {
     @Mapping(target = "categories", expression = "java(mapCategoryNames(article.getCategories()))")
     ArticleCommand toArticleCommand(Article article);
 
+    @Mapping(target = "quantity", source = "processedQuantity")
+    ArticleCommand toArticleCommand(Article article,int processedQuantity);
+
     // Méthode par défaut pour transformer une liste de Category en une liste de noms de catégories
     default List<String> mapCategoryNames(List<Category> categories) {
         return categories != null ? categories.stream()

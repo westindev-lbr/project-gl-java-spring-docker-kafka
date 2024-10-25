@@ -1,11 +1,7 @@
 package com.fil.sra.bdd.config;
 
-import com.fil.sra.models.Article;
-import com.fil.sra.models.Category;
-import com.fil.sra.models.Perishable;
-import com.fil.sra.ports.IArticleRepository;
-import com.fil.sra.ports.ICategoryRepository;
-import com.fil.sra.ports.IStockRepository;
+import com.fil.sra.models.*;
+import com.fil.sra.ports.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +21,7 @@ public class LoadDBConfig {
     public CommandLineRunner load(
             ICategoryRepository categoryRepository,
             IArticleRepository articleRepository,
-            IStockRepository stockRepository
+            IPerishableRepository perishableRepository
     ) {
 
         return args -> {
@@ -82,12 +78,22 @@ public class LoadDBConfig {
                     .bestBefore(new Date()) // Date du jour pour l'exemple
                     .build();
 
+
+
             // Ajout des articles et des périssables dans le dépôt avec les quantités de stock
             articleRepository.addArticle(baguette, 100);
             articleRepository.addArticle(jusOrange, 50);
             articleRepository.addArticle(steak, 30);
             articleRepository.addArticle(yaourt, 20);
-            articleRepository.addArticle(poulet, 15);
+            //articleRepository.addArticle(poulet, 15);
+
+            perishableRepository.createPerishable(poulet);
+            perishableRepository.createPerishable(yaourt);
+
+
+
+            //stockRepository.addStock(Stock.builder().article(steak).quantity(500).build());
+            //perishableStockRepository.addPerishableStock(PerishableStock.builder().bestBefore(new Date()).quantity(500).build());
 
             log.info("Sample data loaded successfully.");
         };

@@ -1,12 +1,10 @@
 package com.fil.sra.adapter.controller;
 
 import com.fil.sra.bdd.service.KafkaProducerService;
-import com.fil.sra.dto.ArticleDto;
-import com.fil.sra.dto.ArticleCommand;
-import com.fil.sra.dto.ResearchArticleRequestDto;
-import com.fil.sra.dto.StockDto;
-import com.fil.sra.exception.NotFoundException;
+import com.fil.sra.dto.*;
+import com.fil.sra.exception.ResourceNotFoundException;
 import com.fil.sra.ports.IArticleUseCases;
+import com.fil.sra.ports.IPerishableStockUseCase;
 import com.fil.sra.ports.IStockUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,15 +32,18 @@ public class AdminController {
     private final IArticleUseCases articleUseCases;
     private final IStockUseCase stockUseCase;
     private final KafkaProducerService kafkaProducerService;
+    private final IPerishableStockUseCase perishableStockUseCase;
 
     @Autowired
     public AdminController(
             IArticleUseCases articleUseCases,
             IStockUseCase stockUseCase,
-            KafkaProducerService kafkaProducerService) {
+            KafkaProducerService kafkaProducerService,
+            IPerishableStockUseCase perishableStockUseCase) {
         this.articleUseCases = articleUseCases;
         this.stockUseCase = stockUseCase;
         this.kafkaProducerService = kafkaProducerService;
+        this.perishableStockUseCase = perishableStockUseCase;
     }
 
     @Operation(summary = "Search for paginated articles",
@@ -57,7 +58,7 @@ public class AdminController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/articles/search")
-    public ResponseEntity<List<ArticleDto>> getPaginatedArticles(
+    public ResponseEntity<List<ArticleCommand>> getPaginatedArticles(
             @RequestParam(required = false) List<String> categories,
             @RequestParam(required = false) String subName,
             @RequestParam(defaultValue = "5") int paginationSize,
@@ -74,7 +75,7 @@ public class AdminController {
 
         try {
             return ResponseEntity.ok(articleUseCases.getPaginatedArticles(search));
-        } catch (NotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             log.error("Not found Error: ", e);
             return ResponseEntity.notFound().build();
         } catch (Exception e){
@@ -99,7 +100,7 @@ public class AdminController {
         try {
             ArticleDto article = articleUseCases.createArticle(command);
             return ResponseEntity.ok(article);
-        } catch (NotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             log.error("Error not found", e);
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -124,7 +125,7 @@ public class AdminController {
         try {
             ArticleDto article = articleUseCases.updateArticle(articleId,command);
             return ResponseEntity.ok(article);
-        } catch (NotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             log.error("Error not found", e);
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -156,7 +157,7 @@ public class AdminController {
             articleUseCases.deleteArticle(articleId);
             response.put("message", "Successfully deleted article");response.put("articleId", articleId);
             return ResponseEntity.ok(response);
-        } catch (NotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             log.error("Error not found", e);
             response.put("message", "Article not found"); response.put("articleId", articleId);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -185,6 +186,41 @@ public class AdminController {
             StockDto stockDto = stockUseCase.updateStock(articleId, quantity);
             kafkaProducerService.sendMessage("Stock updated : " + stockDto.toString());
             return ResponseEntity.ok(stockDto);
+        } catch (Exception e) {
+            log.error("Error while updating stock", e);
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
+    @Operation(
+            summary = "Add a new perishable stock entry",
+            description = "Adds a new perishable stock entry to the database, including details like quantity and best-before date."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Successfully added perishable stock",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = PerishableStockDto.class))
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Resource not found - specified perishable entity does not exist",
+                    content = @Content(mediaType = "application/json")
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Bad request - error occurred during the stock addition process",
+                    content = @Content(mediaType = "application/json")
+            )
+    })
+    @PostMapping("/perishables/stock")
+    public ResponseEntity<PerishableStockDto> addPerishableStock(@RequestBody PerishableStockCommand command){
+        try {
+            return ResponseEntity.ok(perishableStockUseCase.addPerishableStock(command));
+        }catch (ResourceNotFoundException e){
+            log.error("NotFoundError during perishable stock", e);
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             log.error("Error while updating stock", e);
             return ResponseEntity.badRequest().build();

@@ -20,6 +20,7 @@ public class Article {
     protected String img;
     
     protected List<Category> categories;
+    protected Stock stockGlobal;
 
     public void addCategory(Category category) {
         this.categories.add(category);

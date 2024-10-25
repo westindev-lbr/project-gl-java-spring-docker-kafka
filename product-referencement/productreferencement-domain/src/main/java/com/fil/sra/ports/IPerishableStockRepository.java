@@ -5,6 +5,8 @@ import com.fil.sra.models.PerishableStock;
 
 public interface IPerishableStockRepository {
     PerishableStock getPerishableStockByArticleId(int articleId);
-    PerishableStock updatePerishableStock(int id, int quantity);
-    PerishableStock addStock(PerishableStock stock);
+
+    PerishableStock updatePerishableStock(PerishableStock stock);
+
+    PerishableStock addPerishableStock(PerishableStock stock);
 }
