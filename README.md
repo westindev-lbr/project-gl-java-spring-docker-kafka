@@ -6,6 +6,11 @@ Axel LABARRE M2GL - <axel.labarre.etu@univ-lille.fr>
 Jean Emmanuel EHUY - <jeanemmanuelkarld.ehuy.etu@univ-lille.fr>
 Thomas Desruelle - <thomas.desruelle.etu@univ-lille.fr>
 
+## Diagramme
+
+Lien :
+<https://app.diagrams.net/#G1ahgB2e2tWoWqhrWu5wu9PeDco_83b3i0#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D>
+
 ## PRE-REQUIS
 
 Avoir démarrer le démon docker sur sa machine
