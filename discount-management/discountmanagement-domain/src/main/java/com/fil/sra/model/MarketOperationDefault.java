@@ -14,7 +14,7 @@ public class MarketOperationDefault extends MarketOperation{
 
     protected boolean isPercent;
 
-    protected int applyDiscount() {
+    public int applyDiscount() {
         if(isPercent){
             for(ProductDiscounted productDiscounted : products){
                 productDiscounted.setActualPrice(
@@ -23,7 +23,7 @@ public class MarketOperationDefault extends MarketOperation{
             }
         } else {
             for(ProductDiscounted productDiscounted : products){
-                if(!(productDiscounted.getActualPrice() < discounted_value)){
+                if(productDiscounted.getActualPrice() > discounted_value){
                     productDiscounted.setActualPrice(productDiscounted.getActualPrice()-discounted_value);
                 }
             }
