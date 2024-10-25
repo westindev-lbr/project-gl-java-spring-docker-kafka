@@ -5,5 +5,5 @@ public enum TypeOfMarketOperationEntity {
     DEFAULT,
     ONE_FREE,
     LEAST_PRICEY,
-    LOT;
+    LOT
 }
