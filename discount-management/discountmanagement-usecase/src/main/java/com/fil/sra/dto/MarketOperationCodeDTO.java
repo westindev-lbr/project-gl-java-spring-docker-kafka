@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder
 public class MarketOperationCodeDTO extends MarketOperationDefaultDTO{
 
     protected String code;

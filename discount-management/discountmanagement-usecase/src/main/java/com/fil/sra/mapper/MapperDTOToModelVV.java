@@ -4,7 +4,7 @@ import com.fil.sra.dto.*;
 import com.fil.sra.model.*;
 import org.mapstruct.*;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, subclassExhaustiveStrategy = SubclassExhaustiveStrategy.RUNTIME_EXCEPTION/* ,uses = { MarketOperationDefaultDTOMapper.class, MarketOperationLotDTOMapper.class, MarketOperationCodeDTOMapper.class, MarketOperationOneFreeDTOMapper.class, MarketOperationLeastPriceyDTOMapper.class }*/)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, subclassExhaustiveStrategy = SubclassExhaustiveStrategy.RUNTIME_EXCEPTION ,uses = { MapperProductDiscountedDTOToModelVV.class })
 public interface MapperDTOToModelVV {
 
     @SubclassMapping(source = MarketOperationDefaultDTO.class, target = MarketOperationDefault.class)

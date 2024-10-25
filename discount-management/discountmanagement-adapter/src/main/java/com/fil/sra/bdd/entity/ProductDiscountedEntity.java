@@ -1,5 +1,6 @@
 package com.fil.sra.bdd.entity;
 
+import com.fil.sra.model.MarketOperation;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class ProductDiscountedEntity {
     @Id
     @ManyToOne
     @JoinColumn(name = "market_operation_id", nullable = false)
-    public int marketOperationId;
+    private MarketOperation marketOperation;
 
     @Id
     public int productId;
