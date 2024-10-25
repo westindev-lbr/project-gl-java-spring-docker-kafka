@@ -24,9 +24,9 @@ public class AddMarketOperationCommand {
 
     public String code;
 
-    public double numberForLot;
+    public int numberForLot;
 
     public double priceForLot;
 
-    public double valueOrPercentReduction;
+    public int numberForOneFree;
 }

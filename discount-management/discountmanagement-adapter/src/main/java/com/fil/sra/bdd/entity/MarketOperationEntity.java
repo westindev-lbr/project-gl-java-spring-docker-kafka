@@ -27,7 +27,6 @@ public abstract class MarketOperationEntity {
 
     protected Date endDate;
 
-    @Transient
     protected List<ProductEntity> products;
 
     @Enumerated(EnumType.ORDINAL)

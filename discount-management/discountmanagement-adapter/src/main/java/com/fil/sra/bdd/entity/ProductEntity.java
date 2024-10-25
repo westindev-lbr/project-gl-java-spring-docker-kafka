@@ -10,6 +10,8 @@ import lombok.Setter;
 @Setter
 public class ProductEntity {
 
+    private int id;
+
     private double actualPrice;
 
     private double originalPrice;

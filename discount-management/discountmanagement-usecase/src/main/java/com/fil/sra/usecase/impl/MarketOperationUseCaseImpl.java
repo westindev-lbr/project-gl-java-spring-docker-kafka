@@ -2,11 +2,9 @@ package com.fil.sra.usecase.impl;
 
 import com.fil.sra.annotation.Usecase;
 import com.fil.sra.command.AddMarketOperationCommand;
-import com.fil.sra.dto.MarketOperationDTO;
-import com.fil.sra.dto.MarketOperationDefaultDTO;
-import com.fil.sra.dto.ProductDTO;
-import com.fil.sra.dto.TypeOfMarketOperationDTO;
+import com.fil.sra.dto.*;
 import com.fil.sra.exception.ProductDoesNotExistException;
+import com.fil.sra.exception.TypeOfMarketOperationDoesnotExistException;
 import com.fil.sra.mapper.MapperDTOToModelVV;
 import com.fil.sra.model.MarketOperation;
 import com.fil.sra.repository.MarketOperationRepository;
@@ -29,22 +27,8 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
     }
 
     public MarketOperationDTO addMarketOperation(AddMarketOperationCommand addMarketOperationCommand, TypeOfMarketOperationDTO typeOfMarketOperationDTO) {
-        MarketOperationDTO marketOperationDTO;
-        if(typeOfMarketOperationDTO == TypeOfMarketOperationDTO.DEFAULT) {
-            if(Objects.isNull(addMarketOperationCommand.isPercent) && !Objects.isNull(addMarketOperationCommand.value)){
-                marketOperationDTO = MarketOperationDefaultDTO.builder()
-                        .startDate(addMarketOperationCommand.startDate)
-                        .endDate(addMarketOperationCommand.endDate)
-                        .isPercent(addMarketOperationCommand.isPercent)
-                        .discounted_value(addMarketOperationCommand.value)
-                        .build();
-            }
-        } else if (typeOfMarketOperationDTO == TypeOfMarketOperationDTO.CODE){
-            if(Objects.isNull(addMarketOperationCommand.isPercent) && !Objects.isNull(addMarketOperationCommand.value) && Objects.isNull(addMarketOperationCommand.code)){
-
-            }
-        }
-
+        try {
+        MarketOperationDTO marketOperationDTO = createMarketOperationDTO(addMarketOperationCommand,typeOfMarketOperationDTO);
         List<ProductDTO> productDTOS = new ArrayList<>();
         for(String ean : addMarketOperationCommand.getEans()){
             ProductDTO productDTO = ProductDTO.builder()
@@ -53,9 +37,8 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
             productDTOS.add(productDTO);
         }
         marketOperationDTO.setProducts(productDTOS);
-        try {
-            MarketOperation marketOperation = marketOperationRepository.addOperation(mapperDTOToModelVV.toMarketOperation(marketOperationDTO));
-            return mapperDTOToModelVV.toMarketOperationDTO(marketOperation);
+        MarketOperation marketOperation = marketOperationRepository.addOperation(mapperDTOToModelVV.toMarketOperation(marketOperationDTO));
+        return mapperDTOToModelVV.toMarketOperationDTO(marketOperation);
         } catch (ProductDoesNotExistException e){
             System.out.println(e.getMessage());
             return null;
@@ -78,6 +61,58 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
 
     public void deleteMarketOperationById(int id) {
         this.marketOperationRepository.deleteMarketOperationById(id);
+    }
+
+    private MarketOperationDTO createMarketOperationDTO(AddMarketOperationCommand addMarketOperationCommand, TypeOfMarketOperationDTO typeOfMarketOperationDTO) throws TypeOfMarketOperationDoesnotExistException {
+        if(typeOfMarketOperationDTO == TypeOfMarketOperationDTO.DEFAULT
+            && Objects.isNull(addMarketOperationCommand.isPercent) &&
+                    !Objects.isNull(addMarketOperationCommand.value)){
+                return MarketOperationDefaultDTO.builder()
+                        .startDate(addMarketOperationCommand.startDate)
+                        .endDate(addMarketOperationCommand.endDate)
+                        .isPercent(addMarketOperationCommand.isPercent)
+                        .discounted_value(addMarketOperationCommand.value)
+                        .build();
+            }
+        else if (typeOfMarketOperationDTO == TypeOfMarketOperationDTO.CODE &&
+            !Objects.isNull(addMarketOperationCommand.isPercent) &&
+                    !Objects.isNull(addMarketOperationCommand.value) &&
+                    !Objects.isNull(addMarketOperationCommand.code)){
+                return MarketOperationCodeDTO.builder()
+                        .startDate(addMarketOperationCommand.startDate)
+                        .endDate(addMarketOperationCommand.endDate)
+                        .isPercent(addMarketOperationCommand.isPercent)
+                        .discounted_value(addMarketOperationCommand.value)
+                        .code(addMarketOperationCommand.code).build();
+            }
+            else if(typeOfMarketOperationDTO == TypeOfMarketOperationDTO.LOT &&
+                !Objects.isNull(addMarketOperationCommand.numberForLot) &&
+                !Objects.isNull(addMarketOperationCommand.priceForLot)){
+                    return MarketOperationLotDTO.builder()
+                            .startDate(addMarketOperationCommand.startDate)
+                            .endDate(addMarketOperationCommand.endDate)
+                            .priceForLot(addMarketOperationCommand.priceForLot)
+                            .numberForLot(addMarketOperationCommand.numberForLot).build();
+                }
+            else if(typeOfMarketOperationDTO == TypeOfMarketOperationDTO.ONE_FREE &&
+                !Objects.isNull(addMarketOperationCommand.numberForOneFree)){
+                    return MarketOperationOneFreeDTO.builder()
+                            .startDate(addMarketOperationCommand.startDate)
+                            .endDate(addMarketOperationCommand.endDate)
+                            .numberForOneFree(addMarketOperationCommand.numberForOneFree).build();
+                }
+            else if(typeOfMarketOperationDTO == TypeOfMarketOperationDTO.LEAST_PRICEY
+                && !Objects.isNull(addMarketOperationCommand.value) &&
+                !Objects.isNull(addMarketOperationCommand.isPercent)){
+                    return MarketOperationLeastPriceyDTO.builder()
+                            .startDate(addMarketOperationCommand.startDate)
+                            .endDate(addMarketOperationCommand.endDate)
+                            .discounted_value(addMarketOperationCommand.value)
+                            .isPercent(addMarketOperationCommand.isPercent).build();
+                }
+         else {
+            throw new TypeOfMarketOperationDoesnotExistException("The Type you specified doesn't exist");
+        }
     }
 
 

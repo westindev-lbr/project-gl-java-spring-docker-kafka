@@ -4,6 +4,7 @@ import com.fil.sra.command.AddMarketOperationCommand;
 import com.fil.sra.dto.MarketOperationDTO;
 import com.fil.sra.dto.MarketOperationDefaultDTO;
 import com.fil.sra.dto.TypeOfMarketOperationDTO;
+import com.fil.sra.exception.TypeOfMarketOperationDoesnotExistException;
 import com.fil.sra.usecase.MarketOperationUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +25,13 @@ public class MarketOperationController {
     public ResponseEntity<MarketOperationDTO> addMarketOperation(@RequestBody  AddMarketOperationCommand addMarketOperationCommand, @PathVariable(value = "type")String type) {
         try{
             TypeOfMarketOperationDTO typeOfMarketOperationDTO = TypeOfMarketOperationDTO.valueOf(type);
-            return ResponseEntity.ofNullable(this.marketOperationUseCase.addMarketOperation(addMarketOperationCommand, typeOfMarketOperationDTO));
+            return ResponseEntity.ok(this.marketOperationUseCase.addMarketOperation(addMarketOperationCommand, typeOfMarketOperationDTO));
 
         }
         catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().build();
+        }
+        catch (TypeOfMarketOperationDoesnotExistException e ){
             return ResponseEntity.badRequest().build();
         }
     }
