@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class MarketOperationLeastPriceyEntity extends MarketOperationDefaultEntity {
+public class MarketOperationLPEntity extends MarketOperationDefaultEntity {
 
 }
