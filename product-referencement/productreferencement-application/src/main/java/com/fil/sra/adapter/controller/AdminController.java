@@ -1,6 +1,6 @@
 package com.fil.sra.adapter.controller;
 
-import com.fil.sra.bdd.service.KafkaProducerService;
+import com.fil.sra.bdd.kafka.KafkaProducerService;
 import com.fil.sra.dto.*;
 import com.fil.sra.exception.ResourceNotFoundException;
 import com.fil.sra.dto.ArticleDto;
