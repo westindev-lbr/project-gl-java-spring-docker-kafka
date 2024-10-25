@@ -9,8 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class MarketOperationLeastPriceyEntity extends MarketOperationEntity {
-
-    protected int valueOrPercentReduction;
+public class MarketOperationLeastPriceyEntity extends MarketOperationDefaultEntity {
 
 }

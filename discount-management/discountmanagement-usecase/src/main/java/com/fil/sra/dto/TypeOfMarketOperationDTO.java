@@ -5,5 +5,5 @@ public enum TypeOfMarketOperationDTO {
     DEFAULT,
     ONE_FREE,
     LEAST_PRICEY,
-    LOT;
+    LOT
 }

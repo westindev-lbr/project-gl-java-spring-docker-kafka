@@ -10,4 +10,9 @@ public interface MarketOperationRepository {
 
     MarketOperation addOperation(MarketOperation marketOperation) throws ProductDoesNotExistException;
 
+    List<MarketOperation>  getAllMarketOperations();
+
+    MarketOperation getMarketOperationById(int id);
+
+    void deleteMarketOperationById(int id);
 }

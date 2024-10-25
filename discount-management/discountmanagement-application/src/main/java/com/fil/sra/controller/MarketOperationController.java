@@ -1,15 +1,15 @@
 package com.fil.sra.controller;
 
-import com.fil.sra.body.AddMarketOperationQuery;
+import com.fil.sra.command.AddMarketOperationCommand;
 import com.fil.sra.dto.MarketOperationDTO;
 import com.fil.sra.dto.MarketOperationDefaultDTO;
+import com.fil.sra.dto.TypeOfMarketOperationDTO;
+import com.fil.sra.exception.TypeOfMarketOperationDoesnotExistException;
 import com.fil.sra.usecase.MarketOperationUseCase;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/market-operation")
@@ -21,14 +21,34 @@ public class MarketOperationController {
         this.marketOperationUseCase = marketOperationUseCase;
     }
 
-    @PostMapping(value = "/add", consumes = "application/json")
-    public ResponseEntity<MarketOperationDTO> addMarketOperation(@RequestBody AddMarketOperationQuery addMarketOperationQuery) {
-        MarketOperationDefaultDTO marketOperationDTO = MarketOperationDefaultDTO.builder()
-                .startDate(addMarketOperationQuery.getStartDate())
-                .endDate(addMarketOperationQuery.getEndDate())
-                .discounted_value(addMarketOperationQuery.getValue())
-                .isPercent(addMarketOperationQuery.isPercent()).build();
-        return ResponseEntity.ofNullable(this.marketOperationUseCase.addMarketOperation(marketOperationDTO,addMarketOperationQuery.getEans()));
+    @PostMapping(value = "/add/{type}", consumes = "application/json")
+    public ResponseEntity<MarketOperationDTO> addMarketOperation(@RequestBody  AddMarketOperationCommand addMarketOperationCommand, @PathVariable(value = "type")String type) {
+        try{
+            TypeOfMarketOperationDTO typeOfMarketOperationDTO = TypeOfMarketOperationDTO.valueOf(type);
+            return ResponseEntity.ok(this.marketOperationUseCase.addMarketOperation(addMarketOperationCommand, typeOfMarketOperationDTO));
+
+        }
+        catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().build();
+        }
+        catch (TypeOfMarketOperationDoesnotExistException e ){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
+    @GetMapping(value = "/")
+    public ResponseEntity<List<MarketOperationDTO>> getAllMarketOperations(){
+        return ResponseEntity.ok(this.marketOperationUseCase.getAllMarketOperations());
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<MarketOperationDTO> getMarketOperationById(@PathVariable(value = "id") int id){
+        return ResponseEntity.ofNullable(this.marketOperationUseCase.getMarketOperationById(id));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteMarketOperationById(@PathVariable(value = "id") int id){
+        this.marketOperationUseCase.deleteMarketOperationById(id);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -21,14 +21,12 @@ public abstract class MarketOperationEntity {
     @Column(name = "id", nullable = false)
     protected Integer id;
 
-    protected String name;
-
     protected Date startDate;
 
     protected Date endDate;
 
-    @Transient
-    protected List<ProductEntity> products;
+    @OneToMany(mappedBy = "marketOperation", cascade = CascadeType.ALL, orphanRemoval = true)
+    protected List<ProductDiscountedEntity> products;
 
     @Enumerated(EnumType.ORDINAL)
     protected TypeOfMarketOperationEntity type;

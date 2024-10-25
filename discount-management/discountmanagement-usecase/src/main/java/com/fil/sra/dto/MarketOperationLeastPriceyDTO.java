@@ -8,8 +8,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-public class MarketOperationLeastPriceyDTO extends MarketOperationDTO{
-
-    protected int valueOrPercentReduction;
+public class MarketOperationLeastPriceyDTO extends MarketOperationDefaultDTO{
 
 }
