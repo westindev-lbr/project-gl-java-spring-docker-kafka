@@ -102,7 +102,7 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
                         .type(TypeOfMarketOperationDTO.ONE_FREE)
                         .build();
             case LEAST_PRICEY:
-                return MarketOperationLeastPriceyDTO.builder()
+                return MarketOperationLPDTO.builder()
                         .startDate(addMarketOperationCommand.startDate)
                         .endDate(addMarketOperationCommand.endDate)
                         .discounted_value(addMarketOperationCommand.value)

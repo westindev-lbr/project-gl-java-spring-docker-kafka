@@ -8,7 +8,7 @@ import org.mapstruct.*;
 public interface MapperDTOToModelVV {
 
     @SubclassMapping(source = MarketOperationCodeDTO.class, target = MarketOperationCode.class)
-    @SubclassMapping(source = MarketOperationLeastPriceyDTO.class, target = MarketOperationLeastPricey.class)
+    @SubclassMapping(source = MarketOperationLPDTO.class, target = MarketOperationLP.class)
     @SubclassMapping(source = MarketOperationDefaultDTO.class, target = MarketOperationDefault.class)
     @SubclassMapping(source = MarketOperationLotDTO.class, target = MarketOperationLot.class)
     @SubclassMapping(source = MarketOperationOneFreeDTO.class, target = MarketOperationOneFree.class)
