@@ -33,6 +33,7 @@ public class MarketOperationRepositoryImpl implements MarketOperationRepository 
         for(ProductDiscountedEntity productEntity : entity.getProducts()) {
             List<ProductDto> temp = productProxy.getProductsByPage(productEntity.getEan(), null,null,10,0);
             if(temp.size() == 1){
+                productEntity.setProductId(temp.get(0).getId());
                 productEntity.setActualPrice(temp.get(0).getPrice());
                 productEntity.setOriginalPrice(temp.get(0).getPrice());
                 productEntity.setMarketOperation(entity);
