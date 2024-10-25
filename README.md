@@ -86,7 +86,7 @@ Vous veillerez à ouvrir 3 terminaux au préalable pour les taches (1), (2.a) et
     docker logs <contneur>
     ```
 
-## Exemple Swagger 
+## Exemple Swagger
 
 ### Référencement de produits et stock
 
@@ -94,17 +94,18 @@ Vous veillerez à ouvrir 3 terminaux au préalable pour les taches (1), (2.a) et
 
 **UserStory : En tant qu'administrateur je peux gérer les produits de ma base article.**  
 
-`GET - /admin/articles/search`:   
-- sans paramètre : execute sans paramètre donne la liste complète des articles
-- exemple de filtre :
-    - categories : 'Viande'
-    - categories : 'Viande' | subName : 'Prod' 
+`GET - /admin/articles/search`:
+
+* sans paramètre : execute sans paramètre donne la liste complète des articles
+* exemple de filtre :
+  * categories : 'Viande'
+  * categories : 'Viande' | subName : 'Prod'
 
 `PUT - /admin/articles/{articleId}`:  
 
 Exemple modification d'un article :  
 
-`articleId` : 1 (du pain).   
+`articleId` : 1 (du pain).
 
 ```json
 {
@@ -148,7 +149,7 @@ Exemple :  Ajout d'un stock de 20 viandes.
 
 `POST - /admin/perishables/stock`:  
 
-Exemple : Ajout d'un stock de 15 yaourts. 
+Exemple : Ajout d'un stock de 15 yaourts.
 
 ```json
 {
@@ -163,9 +164,7 @@ Exemple : Ajout d'un stock de 15 yaourts.
 
 `GET - /admin/article/perishable/expired`: (Juste la route à exécute)
 
-
 NB : nous n'avons pas eu le temps d'implémenter les deux dernières user stories mais elles sont similaire à la dernière.
-
 
 # DISCOUNT-MANAGEMENT
 
@@ -175,9 +174,9 @@ Exemple des différents json pour les requestBody.
 Et la gestion de liste d'ean n'est pas encore totalement implémenté. Le renvoi d'id depuis le microservice stock
 n'était pas implémenté.
 
-http://localhost:8083/swagger-ui-custom.html
+<http://localhost:8083/swagger-ui-custom.html>
 
-## CODE :
+## CODE
 
 ```
 {
@@ -245,4 +244,34 @@ http://localhost:8083/swagger-ui-custom.html
     "endDate" : "2025-04-23T18:25:43.511Z",
     "numberForOneFree" : 3
 }
+```
+
+## KAFKA
+
+Nous avons implémanté Kafka avec un Producer( Discount-Management )  et un Consumer ( Product Referencement )
+
+Pour tester l'envoi d'un message dans le topic price_update_topic
+
+la route :   '<http://localhost:8083/market-operation/add/DEFAULT>'
+
+```json
+{
+    "eans" : [
+        "ean2"
+    ],
+    "startDate": "2024-10-01T00:00:00Z",
+    "endDate": "2024-10-31T23:59:59Z",
+    "value" : 0.50,
+    "isPercent" : true
+}
+```
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+Côté Product-Referencement :
+
+```sh
+2024-10-25T22:39:02.223+02:00  INFO 38547 --- [ntainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-product-group-1, groupId=product-group] Finished assignment for group at generation 3: {consumer-product-group-1-6ce7eb3b-d024-4a68-9ee4-632c075ce3f5=Assignment(partitions=[price_update_topic-0, price_update_topic-1, price_update_topic-2])}
 ```
