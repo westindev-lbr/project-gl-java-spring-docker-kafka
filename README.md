@@ -52,8 +52,8 @@ Vous veillerez à ouvrir 3 terminaux au préalable pour les taches (1), (2.a) et
     docker-compose -f docker-compose.yml up -d
     ```
 
-* URL product-referencement-api : `http://localhost:8082`
-* URL discount-management-api : `http://localhost:8083`
+* URL product-referencement-api : `http://localhost:8082/swagger-ui/index.html`
+* URL discount-management-api : `http://localhost:8083/swagger-ui/index.html`
 * URL kafka : `http://localhost:3000`
 
 ---

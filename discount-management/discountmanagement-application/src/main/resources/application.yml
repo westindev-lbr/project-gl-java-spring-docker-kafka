@@ -18,3 +18,11 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
   profiles:
     active: local
+
+#Swagger Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
+    operationsSorter: method
+  api-docs:
+    path: /api-docs
