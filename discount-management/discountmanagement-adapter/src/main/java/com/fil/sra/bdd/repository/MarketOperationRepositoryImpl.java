@@ -35,6 +35,7 @@ public class MarketOperationRepositoryImpl implements MarketOperationRepository 
             if(temp.size() == 1){
                 productEntity.setActualPrice(temp.get(0).getPrice());
                 productEntity.setOriginalPrice(temp.get(0).getPrice());
+                productEntity.setMarketOperation(entity);
             }
             else{
                 throw new ProductDoesNotExistException("The Ean: " + temp.get(0) + " given doesn't exist in Product DB");

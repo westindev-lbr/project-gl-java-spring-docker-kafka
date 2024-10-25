@@ -12,6 +12,7 @@ public interface MapperEntityToModelVV {
     @SubclassMapping(source = MarketOperationLeastPriceyEntity.class, target = MarketOperationLeastPricey.class)
     @SubclassMapping(source = MarketOperationLotEntity.class, target = MarketOperationLot.class)
     @SubclassMapping(source = MarketOperationOneFreeEntity.class, target = MarketOperationOneFree.class)
+    @Mapping(target = "products", source = "products")
     MarketOperation toMarketOperation(MarketOperationEntity marketOperationEntity);
 
     @InheritInverseConfiguration(name = "toMarketOperation")

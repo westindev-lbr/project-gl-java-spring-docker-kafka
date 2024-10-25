@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = { MapperEntityToModelVV.class })
 public interface MapperProductDiscountedEntityToModelVV {
 
-    @Mapping(source = "marketOperationId", target = "marketOperation.id")
+
     ProductDiscountedEntity productDiscountedToEntity(ProductDiscounted productDiscounted);
 
     @InheritInverseConfiguration(name = "productDiscountedToEntity")

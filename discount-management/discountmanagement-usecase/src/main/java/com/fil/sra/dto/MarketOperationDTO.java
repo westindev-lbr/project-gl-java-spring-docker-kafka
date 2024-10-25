@@ -15,8 +15,6 @@ public abstract class MarketOperationDTO {
 
     protected int id;
 
-    protected String name;
-
     protected Date startDate;
 
     protected Date endDate;

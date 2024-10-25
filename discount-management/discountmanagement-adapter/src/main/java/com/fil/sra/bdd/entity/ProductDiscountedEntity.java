@@ -13,13 +13,12 @@ import java.awt.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "product_discounted")
-@IdClass(CompositeKey.class)
 public class ProductDiscountedEntity {
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "market_operation_id", nullable = false)
-    private MarketOperation marketOperation;
+    @MapsId
+    @JoinColumn(name = "marketOperation.id", nullable = false)
+    private MarketOperationEntity marketOperation;
 
     @Id
     public int productId;

@@ -21,8 +21,6 @@ public abstract class MarketOperationEntity {
     @Column(name = "id", nullable = false)
     protected Integer id;
 
-    protected String name;
-
     protected Date startDate;
 
     protected Date endDate;

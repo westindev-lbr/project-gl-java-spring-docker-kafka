@@ -12,6 +12,7 @@ public interface MapperDTOToModelVV {
     @SubclassMapping(source = MarketOperationLeastPriceyDTO.class, target = MarketOperationLeastPricey.class)
     @SubclassMapping(source = MarketOperationLotDTO.class, target = MarketOperationLot.class)
     @SubclassMapping(source = MarketOperationOneFreeDTO.class, target = MarketOperationOneFree.class)
+    @Mapping(target = "products", source = "products")
     MarketOperation toMarketOperation(MarketOperationDTO marketOperationDTO);
 
 
