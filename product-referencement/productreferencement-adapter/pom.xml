@@ -19,9 +19,16 @@
     </properties>
 
     <dependencies>
+
+        <!-- Sous-modules Architecture Hexagonale -->
         <dependency>
             <groupId>com.fil.sra</groupId>
             <artifactId>productreferencement-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fil.sra</groupId>
+            <artifactId>productreferencement-usecase</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -60,7 +67,11 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.0</version>
+        </dependency>
     </dependencies>
 
 </project>

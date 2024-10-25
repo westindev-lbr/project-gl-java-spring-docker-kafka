@@ -70,6 +70,7 @@ services:
 
       kafka-topics --bootstrap-server kata-kafka:29092 --topic article_topic --create --partitions 3 --replication-factor 1 --if-not-exists
       kafka-topics --bootstrap-server kata-kafka:29092 --topic discount_topic --create --partitions 3 --replication-factor 1 --if-not-exists
+      kafka-topics --bootstrap-server kata-kafka:29092 --topic price_update_topic --create --partitions 3 --replication-factor 1 --if-not-exists
 
       echo 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kata-kafka:29092 --list

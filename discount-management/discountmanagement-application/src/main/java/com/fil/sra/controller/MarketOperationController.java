@@ -2,14 +2,14 @@ package com.fil.sra.controller;
 
 import com.fil.sra.command.AddMarketOperationCommand;
 import com.fil.sra.dto.MarketOperationDTO;
-import com.fil.sra.dto.MarketOperationDefaultDTO;
 import com.fil.sra.dto.TypeOfMarketOperationDTO;
 import com.fil.sra.exception.TypeOfMarketOperationDoesnotExistException;
+import com.fil.sra.service.kafka.KafkaProducerService;
 import com.fil.sra.usecase.MarketOperationUseCase;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +20,13 @@ import java.util.List;
 public class MarketOperationController {
 
     private final MarketOperationUseCase marketOperationUseCase;
+    private final KafkaProducerService kafkaProducerService;
 
-    public MarketOperationController(MarketOperationUseCase marketOperationUseCase) {
+    public MarketOperationController(
+            MarketOperationUseCase marketOperationUseCase,
+            KafkaProducerService kafkaProducerService) {
         this.marketOperationUseCase = marketOperationUseCase;
+        this.kafkaProducerService = kafkaProducerService;
     }
 
     @PostMapping(value = "/add/{type}", consumes = "application/json")
@@ -33,13 +37,16 @@ public class MarketOperationController {
                                                                  @Parameter(description = "Type of TypeMarketOperation", example = "CODE")@PathVariable(value = "type")String type) {
         try{
             TypeOfMarketOperationDTO typeOfMarketOperationDTO = TypeOfMarketOperationDTO.valueOf(type);
-            return ResponseEntity.ok(this.marketOperationUseCase.addMarketOperation(addMarketOperationCommand, typeOfMarketOperationDTO));
-
-        }
-        catch (IllegalArgumentException e){
+            
+            MarketOperationDTO marketOperationDTOResponse = this.marketOperationUseCase.addMarketOperation(addMarketOperationCommand,
+            typeOfMarketOperationDTO);
+            if (marketOperationDTOResponse.getType().equals(TypeOfMarketOperationDTO.DEFAULT)) {
+                this.kafkaProducerService.sendMessage(marketOperationDTOResponse);
+            }
+            return ResponseEntity.ok(marketOperationDTOResponse);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
-        }
-        catch (TypeOfMarketOperationDoesnotExistException e ){
+        } catch (TypeOfMarketOperationDoesnotExistException e) {
             return ResponseEntity.badRequest().build();
         }
     }

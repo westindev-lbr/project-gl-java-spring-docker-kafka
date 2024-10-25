@@ -1,4 +1,4 @@
-package com.fil.sra.bdd.service;
+package com.fil.sra.bdd.kafka;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

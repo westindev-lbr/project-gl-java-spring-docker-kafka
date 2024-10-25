@@ -6,7 +6,7 @@ import org.mapstruct.factory.Mappers;
 import com.fil.sra.dto.CartDto;
 import com.fil.sra.model.Cart;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface CartDtoMapper {
     CartDtoMapper INSTANCE = Mappers.getMapper(CartDtoMapper.class);
 
