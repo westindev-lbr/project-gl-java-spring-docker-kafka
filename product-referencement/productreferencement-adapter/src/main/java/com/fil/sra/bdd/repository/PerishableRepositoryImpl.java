@@ -5,8 +5,11 @@ import com.fil.sra.bdd.entity.PerishableEntity;
 import com.fil.sra.bdd.mapper.PerishableEntityMapper;
 import com.fil.sra.exception.ResourceNotFoundException;
 import com.fil.sra.models.Perishable;
-import com.fil.sra.ports.IArticleRepository;
+
 import com.fil.sra.ports.IPerishableRepository;
+
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -14,10 +17,8 @@ import org.springframework.stereotype.Service;
 public class PerishableRepositoryImpl implements IPerishableRepository {
 
     private final PerishableJPARepository perishableJPARepository;
-    private final IArticleRepository articleRepository;
 
-    public PerishableRepositoryImpl(IArticleRepository articleRepository,PerishableJPARepository perishableJPARepository){
-        this.articleRepository = articleRepository;
+    public PerishableRepositoryImpl(PerishableJPARepository perishableJPARepository){
         this.perishableJPARepository = perishableJPARepository;
     }
 
@@ -27,7 +28,7 @@ public class PerishableRepositoryImpl implements IPerishableRepository {
     }
 
     @Override
-    public Perishable createPerishable(Perishable perishable) {
+    public Perishable addPerishable(Perishable perishable) {
         PerishableEntity entity = this.perishableJPARepository.save(PerishableEntityMapper.INSTANCE.toPerishableEntity(perishable));
         return PerishableEntityMapper.INSTANCE.toPerishable(entity);
     }
@@ -44,6 +45,12 @@ public class PerishableRepositoryImpl implements IPerishableRepository {
     @Override
     public void deletePerishable(Integer id) {
         this.perishableJPARepository.deleteById(id);
+    }
+
+    @Override
+    public List<Perishable> getExpiredPerishable(Date currentDate) {
+        List<PerishableEntity> perishables = this.perishableJPARepository.findByBestBeforeBefore(currentDate);
+        return perishables.stream().map(PerishableEntityMapper.INSTANCE::toPerishable).toList();
     }
 
     @Override

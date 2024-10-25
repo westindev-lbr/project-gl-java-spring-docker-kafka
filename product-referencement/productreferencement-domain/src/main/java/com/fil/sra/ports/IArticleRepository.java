@@ -13,4 +13,5 @@ public interface IArticleRepository {
     void deleteArticle(Integer id);
     List<Article> getArticlesByCriteria(String ean, String subName, List<Category> categories, int paginationSize, int pageNumber) throws ResourceNotFoundException;
     Article addArticle(Article article, int quantity);
+    Article getArticleByName(String name);
 }

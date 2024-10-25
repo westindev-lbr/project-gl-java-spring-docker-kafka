@@ -18,7 +18,6 @@ public class Article {
     protected String ean;
     protected double vat;
     protected String img;
-    
     protected List<Category> categories;
     protected Stock stockGlobal;
 

@@ -86,4 +86,10 @@ public class ArticleRepositoryImpl implements IArticleRepository {
             return null;
         return articleEntityMapper.toArticle(articleSaved);
     }
+
+    @Override
+    public Article getArticleByName(String name) {
+        Optional<ArticleEntity> entity = articleJPARepository.findByName(name);
+        return entity.map(ArticleEntityMapper.INSTANCE::toArticle).orElse(null);
+    }
 }

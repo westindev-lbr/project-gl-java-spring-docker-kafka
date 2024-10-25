@@ -10,8 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
-public class Perishable extends Article {
-    private Date bestBefore;
+public class Perishable  extends Article {
     private String lot;
-    private List<PerishableStock> stocks;
+    private Date bestBefore;
+    private PerishableStock stock;
 }
