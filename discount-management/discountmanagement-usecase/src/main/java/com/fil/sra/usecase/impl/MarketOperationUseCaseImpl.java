@@ -37,7 +37,8 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
             productDTOS.add(productDTO);
         }
         marketOperationDTO.setProducts(productDTOS);
-        MarketOperation marketOperation = marketOperationRepository.addOperation(mapperDTOToModelVV.toMarketOperation(marketOperationDTO));
+        MarketOperation marketOperationToPass = mapperDTOToModelVV.toMarketOperation(marketOperationDTO);
+        MarketOperation marketOperation = marketOperationRepository.addOperation(marketOperationToPass);
         return mapperDTOToModelVV.toMarketOperationDTO(marketOperation);
         } catch (ProductDoesNotExistException e){
             System.out.println(e.getMessage());
@@ -71,6 +72,7 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
                         .endDate(addMarketOperationCommand.endDate)
                         .isPercent(addMarketOperationCommand.isPercent)
                         .discounted_value(addMarketOperationCommand.value)
+                        .type(TypeOfMarketOperationDTO.DEFAULT)
                         .build();
             case CODE:
                 if (!Objects.isNull(addMarketOperationCommand.code)) {
@@ -80,6 +82,7 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
                             .isPercent(addMarketOperationCommand.isPercent)
                             .discounted_value(addMarketOperationCommand.value)
                             .code(addMarketOperationCommand.code)
+                            .type(TypeOfMarketOperationDTO.CODE)
                             .build();
                 }
                 break;
@@ -89,12 +92,14 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
                         .endDate(addMarketOperationCommand.endDate)
                         .priceForLot(addMarketOperationCommand.priceForLot)
                         .numberForLot(addMarketOperationCommand.numberForLot)
+                        .type(TypeOfMarketOperationDTO.LOT)
                         .build();
             case ONE_FREE:
                 return MarketOperationOneFreeDTO.builder()
                         .startDate(addMarketOperationCommand.startDate)
                         .endDate(addMarketOperationCommand.endDate)
                         .numberForOneFree(addMarketOperationCommand.numberForOneFree)
+                        .type(TypeOfMarketOperationDTO.ONE_FREE)
                         .build();
             case LEAST_PRICEY:
                 return MarketOperationLeastPriceyDTO.builder()
@@ -102,6 +107,7 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
                         .endDate(addMarketOperationCommand.endDate)
                         .discounted_value(addMarketOperationCommand.value)
                         .isPercent(addMarketOperationCommand.isPercent)
+                        .type(TypeOfMarketOperationDTO.LEAST_PRICEY)
                         .build();
             default:
                 throw new TypeOfMarketOperationDoesnotExistException("The Type you specified doesn't exist");

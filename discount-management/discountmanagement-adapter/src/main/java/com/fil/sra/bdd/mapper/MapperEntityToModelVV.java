@@ -4,7 +4,7 @@ import com.fil.sra.bdd.entity.*;
 import com.fil.sra.model.*;
 import org.mapstruct.*;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, subclassExhaustiveStrategy = SubclassExhaustiveStrategy.RUNTIME_EXCEPTION ,uses = {  })
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, subclassExhaustiveStrategy = SubclassExhaustiveStrategy.RUNTIME_EXCEPTION ,uses = { MapperProductDiscountedEntityToModelVV.class, MapperTypeMarketOperationEntityToModelVV.class })
 public interface MapperEntityToModelVV {
 
     @SubclassMapping(source = MarketOperationCodeEntity.class, target = MarketOperationCode.class)
