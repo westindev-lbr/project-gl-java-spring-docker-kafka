@@ -1,5 +1,6 @@
 package com.fil.sra.service.config;
 
+import com.fil.sra.service.proxy.CartServiceProxy;
 import com.fil.sra.service.proxy.ProductProxy;
 import com.fil.sra.service.proxy.Proxy;
 import org.springframework.context.annotation.Bean;
@@ -18,4 +19,9 @@ public class ServiceConfig {
     public Proxy getProxy(RestTemplate restTemplate){
         return new ProductProxy(restTemplate);
     }
+
+    @Bean
+    public Proxy getCartServiceProxy(RestTemplate restTemplate){
+        return new CartServiceProxy(restTemplate);
+    } 
 }

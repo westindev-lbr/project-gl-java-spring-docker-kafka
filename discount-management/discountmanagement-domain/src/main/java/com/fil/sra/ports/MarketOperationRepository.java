@@ -1,4 +1,4 @@
-package com.fil.sra.repository;
+package com.fil.sra.ports;
 
 import com.fil.sra.exception.ProductDoesNotExistException;
 import com.fil.sra.model.MarketOperation;
