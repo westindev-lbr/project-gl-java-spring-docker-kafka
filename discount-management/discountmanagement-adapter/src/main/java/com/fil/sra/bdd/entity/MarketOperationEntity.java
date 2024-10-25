@@ -27,7 +27,8 @@ public abstract class MarketOperationEntity {
 
     protected Date endDate;
 
-    protected List<ProductEntity> products;
+    @OneToMany(mappedBy = "marketOperation", cascade = CascadeType.ALL, orphanRemoval = true)
+    protected List<ProductDiscountedEntity> products;
 
     @Enumerated(EnumType.ORDINAL)
     protected TypeOfMarketOperationEntity type;

@@ -20,7 +20,7 @@ public abstract class MarketOperation {
 
     protected Date endDate;
 
-    protected List<Product> products;
+    protected List<ProductDiscounted> products;
 
     protected TypeMarketOperation type;
 

@@ -1,9 +1,6 @@
 package com.fil.sra.bdd.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +16,16 @@ import java.awt.*;
 public class ProductDiscountedEntity {
 
     @Id
+    @ManyToOne
+    @JoinColumn(name = "market_operation_id", nullable = false)
     public int marketOperationId;
 
     @Id
     public int productId;
 
-    public int actualPrice;
+    public double actualPrice;
+
+    public double originalPrice;
+
+    public String ean;
 }

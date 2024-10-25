@@ -21,7 +21,7 @@ public abstract class MarketOperationDTO {
 
     protected Date endDate;
 
-    protected List<ProductDTO> products;
+    protected List<ProductDiscountedDTO> products;
 
     protected TypeOfMarketOperationDTO type;
 

@@ -29,9 +29,9 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
     public MarketOperationDTO addMarketOperation(AddMarketOperationCommand addMarketOperationCommand, TypeOfMarketOperationDTO typeOfMarketOperationDTO) {
         try {
         MarketOperationDTO marketOperationDTO = createMarketOperationDTO(addMarketOperationCommand,typeOfMarketOperationDTO);
-        List<ProductDTO> productDTOS = new ArrayList<>();
+        List<ProductDiscountedDTO> productDTOS = new ArrayList<>();
         for(String ean : addMarketOperationCommand.getEans()){
-            ProductDTO productDTO = ProductDTO.builder()
+            ProductDiscountedDTO productDTO = ProductDiscountedDTO.builder()
                     .ean(ean)
                     .build();
             productDTOS.add(productDTO);
