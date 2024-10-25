@@ -39,6 +39,7 @@ public class MarketOperationUseCaseImpl implements MarketOperationUseCase {
         marketOperationDTO.setProducts(productDTOS);
         MarketOperation marketOperationToPass = mapperDTOToModelVV.toMarketOperation(marketOperationDTO);
         MarketOperation marketOperation = marketOperationRepository.addOperation(marketOperationToPass);
+        marketOperation.applyDiscount();
         return mapperDTOToModelVV.toMarketOperationDTO(marketOperation);
         } catch (ProductDoesNotExistException e){
             System.out.println(e.getMessage());

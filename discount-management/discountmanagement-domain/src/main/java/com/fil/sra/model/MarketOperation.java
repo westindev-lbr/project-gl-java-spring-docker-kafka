@@ -22,5 +22,5 @@ public abstract class MarketOperation {
 
     protected TypeMarketOperation type;
 
-    protected abstract int applyDiscount();
+    public abstract int applyDiscount();
 }

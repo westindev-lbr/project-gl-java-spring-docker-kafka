@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class MarketOperationLP extends MarketOperationDefault {
 
-    protected int applyDiscount() {
+    public int applyDiscount() {
         return 0;
     }
 }
