@@ -13,7 +13,7 @@ public class MarketOperationCode extends MarketOperationDefault{
 
     protected String code;
 
-    protected int applyDiscount(){
+    public int applyDiscount(){
         return super.applyDiscount();
     }
 

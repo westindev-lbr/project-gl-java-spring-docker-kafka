@@ -15,7 +15,7 @@ public class MarketOperationLot extends MarketOperation{
 
     protected double priceForLot;
 
-    protected int applyDiscount() {
+    public int applyDiscount() {
         return 0;
     }
 }

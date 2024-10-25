@@ -15,8 +15,8 @@ http://localhost:8083/swagger-ui-custom.html
     ],
     "startDate" : "2024-04-23T18:25:43.511Z",
     "endDate" : "2025-04-23T18:25:43.511Z",
-    "value" : 20.0,
-    "isPercent" : true,
+    "value" : 0.5,
+    "isPercent" : false,
     "code" : "PROMO25"
 }
 ```
@@ -26,12 +26,12 @@ http://localhost:8083/swagger-ui-custom.html
 ```
 {
     "eans" : [
-        "1234567890123"
+        "1234567890123",
     ],
     "startDate" : "2024-04-23T18:25:43.511Z",
     "endDate" : "2025-04-23T18:25:43.511Z",
-    "value" : 20.0,
-    "isPercent" : true,
+    "value" : 0.6,
+    "isPercent" : false,
 }
 ```
 
