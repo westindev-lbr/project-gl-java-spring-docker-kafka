@@ -28,6 +28,5 @@ public class MarketOperationDefault extends MarketOperation{
                 }
             }
         }
-        return 0;
     }
 }
