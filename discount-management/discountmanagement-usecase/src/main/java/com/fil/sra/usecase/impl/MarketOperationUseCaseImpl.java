@@ -7,7 +7,7 @@ import com.fil.sra.exception.ProductDoesNotExistException;
 import com.fil.sra.exception.TypeOfMarketOperationDoesnotExistException;
 import com.fil.sra.mapper.MapperDTOToModelVV;
 import com.fil.sra.model.MarketOperation;
-import com.fil.sra.repository.MarketOperationRepository;
+import com.fil.sra.ports.MarketOperationRepository;
 import com.fil.sra.usecase.MarketOperationUseCase;
 
 import java.util.ArrayList;

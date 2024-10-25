@@ -5,7 +5,7 @@ import com.fil.sra.bdd.entity.ProductDiscountedEntity;
 import com.fil.sra.bdd.mapper.MapperEntityToModelVV;
 import com.fil.sra.exception.ProductDoesNotExistException;
 import com.fil.sra.model.MarketOperation;
-import com.fil.sra.repository.MarketOperationRepository;
+import com.fil.sra.ports.MarketOperationRepository;
 import com.fil.sra.service.dto.ProductDto;
 import com.fil.sra.service.proxy.ProductProxy;
 import org.springframework.stereotype.Component;
