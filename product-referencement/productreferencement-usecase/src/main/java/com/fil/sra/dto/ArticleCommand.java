@@ -2,7 +2,7 @@ package com.fil.sra.dto;
 
 import java.util.List;
 
-public record CreateArticleCommand(
+public record ArticleCommand(
         String name,
         String brand,
         double price,

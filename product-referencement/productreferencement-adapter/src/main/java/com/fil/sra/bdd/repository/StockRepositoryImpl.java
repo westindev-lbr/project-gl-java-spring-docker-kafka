@@ -28,7 +28,7 @@ public class StockRepositoryImpl implements IStockRepository {
         return stockEntityMapper.toStock(savedEntity);
     }
 
-    
+    @Override
     public Stock getStock(int id) {
         Optional<StockEntity> stockEntity = stockJPARepository.findById(id);
         if (!stockEntity.isPresent()) return null;
