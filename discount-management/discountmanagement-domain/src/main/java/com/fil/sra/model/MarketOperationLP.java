@@ -1,17 +1,15 @@
 package com.fil.sra.model;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @Getter
 @Setter
-public class MarketOperationLeastPricey extends MarketOperationDefault {
+public class MarketOperationLP extends MarketOperationDefault {
 
-    protected int applyDiscount() {
+    public int applyDiscount() {
         return 0;
     }
 }

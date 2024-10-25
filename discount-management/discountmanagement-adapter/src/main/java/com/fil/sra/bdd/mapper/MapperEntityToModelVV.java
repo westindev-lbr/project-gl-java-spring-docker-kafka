@@ -8,7 +8,7 @@ import org.mapstruct.*;
 public interface MapperEntityToModelVV {
 
     @SubclassMapping(source = MarketOperationCodeEntity.class, target = MarketOperationCode.class)
-    @SubclassMapping(source = MarketOperationLeastPriceyEntity.class, target = MarketOperationLeastPricey.class)
+    @SubclassMapping(source = MarketOperationLPEntity.class, target = MarketOperationLP.class)
     @SubclassMapping(source = MarketOperationDefaultEntity.class, target = MarketOperationDefault.class)
     @SubclassMapping(source = MarketOperationLotEntity.class, target = MarketOperationLot.class)
     @SubclassMapping(source = MarketOperationOneFreeEntity.class, target = MarketOperationOneFree.class)

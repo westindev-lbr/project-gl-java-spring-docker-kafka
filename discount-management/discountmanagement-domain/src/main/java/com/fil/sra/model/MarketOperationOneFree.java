@@ -13,7 +13,7 @@ public class MarketOperationOneFree extends MarketOperation{
 
     protected int numberForOneFree;
 
-    protected int applyDiscount() {
+    public int applyDiscount() {
         return 0;
     }
 }
