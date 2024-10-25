@@ -1,7 +1,12 @@
 package com.fil.sra.bdd.config;
 
-import com.fil.sra.models.*;
-import com.fil.sra.ports.*;
+import com.fil.sra.models.Article;
+import com.fil.sra.models.Category;
+import com.fil.sra.models.Perishable;
+import com.fil.sra.ports.IArticleRepository;
+import com.fil.sra.ports.ICategoryRepository;
+import com.fil.sra.ports.IPerishableRepository;
+import com.fil.sra.ports.IStockRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +27,8 @@ public class LoadDBConfig {
     public CommandLineRunner load(
             ICategoryRepository categoryRepository,
             IArticleRepository articleRepository,
-            IPerishableRepository perishableRepository
-    ) {
+            IStockRepository stockRepository,
+            IPerishableRepository perishableRepository) {
 
         return args -> {
 
@@ -38,6 +44,13 @@ public class LoadDBConfig {
             categoryRepository.addCategory(boissons);
             categoryRepository.addCategory(patisserie);
             categoryRepository.addCategory(viande);
+
+            // Gestion dates
+            Date currentDate = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentDate);
+            calendar.add(Calendar.MONTH, -1);
+            Date oneMonthBefore = calendar.getTime();
 
             // Articles normaux
             Article baguette = Article.builder()
@@ -67,7 +80,7 @@ public class LoadDBConfig {
                     .ean("4567890123456")
                     .price(2.50)
                     .categories(List.of(patisserie))
-                    .bestBefore(new Date()) // Date du jour pour l'exemple
+                    .bestBefore(new Date())
                     .build();
 
             Perishable poulet = Perishable.builder()
@@ -75,27 +88,30 @@ public class LoadDBConfig {
                     .ean("5678901234567")
                     .price(7.99)
                     .categories(List.of(viande))
-                    .bestBefore(new Date()) // Date du jour pour l'exemple
+                    .bestBefore(new Date())
                     .build();
 
+            // Date du jour pour l'exemple
+            Perishable saumon = Perishable.builder()
+                    .name("2 Pavés de saumon")
+                    .ean("ean2")
+                    .price(8.90)
+                    .categories(List.of(viande))
+                    .bestBefore(oneMonthBefore)
+                    .build();
 
-
-            // Ajout des articles et des périssables dans le dépôt avec les quantités de stock
+            // Ajout des articles dans le dépôt avec les quantités
             articleRepository.addArticle(baguette, 100);
             articleRepository.addArticle(jusOrange, 50);
             articleRepository.addArticle(steak, 30);
-            articleRepository.addArticle(yaourt, 20);
-            //articleRepository.addArticle(poulet, 15);
 
-            perishableRepository.createPerishable(poulet);
-            perishableRepository.createPerishable(yaourt);
-
-
-
-            //stockRepository.addStock(Stock.builder().article(steak).quantity(500).build());
-            //perishableStockRepository.addPerishableStock(PerishableStock.builder().bestBefore(new Date()).quantity(500).build());
+            // Ajout des articles et des périssables dans le dépôt avec les quantités de
+            perishableRepository.addPerishable(poulet);
+            perishableRepository.addPerishable(saumon);
+            perishableRepository.addPerishable(yaourt);
 
             log.info("Sample data loaded successfully.");
+
         };
 
     }
